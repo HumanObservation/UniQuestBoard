@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id = "@+id/questCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="@color/completed_blue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="想吃八月堂的青柠云朵，但是这只是为了凑字数凑字数凑字数凑字数凑字数凑字数凑字数凑字数"
+            />
+
+        <TextView
+            android:id="@+id/contentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="观塘店专属，但是没啥可说的没啥可说的没啥可说的没啥可说的没啥哈哈哈哈哈哈哈哈哈哈哈哈哈"
+            />
+        <TextView
+            android:id="@+id/expireTimeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_marginTop="2dp"
+            android:textSize="10sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Expire : 9/11/2023 11:56"
+            />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

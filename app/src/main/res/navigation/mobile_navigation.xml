@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_board">
+
+    <fragment
+        android:id="@+id/nav_board"
+        android:name="com.mobileapplication.uniquestboard.ui.board.BoardFragment"
+        android:label="@string/menu_board"
+        tools:layout="@layout/fragment_board" />
+
+    <fragment
+        android:id="@+id/nav_acceptedQuests"
+        android:name="com.mobileapplication.uniquestboard.ui.acceptedQuests.AcceptedQuestsFragment"
+        android:label="@string/menu_acceptedQuests"
+        tools:layout="@layout/fragment_accepted_quests" />
+
+    <fragment
+        android:id="@+id/nav_myQuests"
+        android:name="com.mobileapplication.uniquestboard.ui.myQuests.MyQuestsFragment"
+        android:label="@string/menu_myQuests"
+        tools:layout="@layout/fragment_my_quests" />
+</navigation>
