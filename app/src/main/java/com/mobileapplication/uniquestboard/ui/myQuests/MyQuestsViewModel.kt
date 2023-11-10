@@ -3,7 +3,7 @@ package com.mobileapplication.uniquestboard.ui.myQuests
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mobileapplication.uniquestboard.Quest
+import com.mobileapplication.uniquestboard.ui.common.Quest
 
 class MyQuestsViewModel : ViewModel() {
 

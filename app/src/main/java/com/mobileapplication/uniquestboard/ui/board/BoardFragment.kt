@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mobileapplication.uniquestboard.Contact
-import com.mobileapplication.uniquestboard.Quest
-import com.mobileapplication.uniquestboard.Status
+import com.mobileapplication.uniquestboard.ui.common.Contact
+import com.mobileapplication.uniquestboard.ui.common.Quest
+import com.mobileapplication.uniquestboard.ui.common.Status
 import com.mobileapplication.uniquestboard.databinding.FragmentBoardBinding
 import com.mobileapplication.uniquestboard.ui.common.QuestAdapter
 import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
@@ -45,7 +43,7 @@ class BoardFragment : QuestsContainer() {
         var contact = Contact("55556666","@some_one")
         var status = Status.COMPLETED;
         val image = mutableListOf<String>()
-        var quest1:Quest = Quest(
+        var quest1: Quest = Quest(
             LocalDateTime.now(),
             LocalDateTime.now(),
             "admin",
@@ -60,7 +58,7 @@ class BoardFragment : QuestsContainer() {
 
         questList.add(quest1)
         taker.add("anyone else")
-        var quest2:Quest = Quest(
+        var quest2: Quest = Quest(
             LocalDateTime.now(),
             LocalDateTime.now(),
             "someone else",

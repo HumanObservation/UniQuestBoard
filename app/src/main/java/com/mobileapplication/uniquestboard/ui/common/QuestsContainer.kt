@@ -1,9 +1,6 @@
 package com.mobileapplication.uniquestboard.ui.common
 
-import android.util.Log
 import androidx.fragment.app.Fragment
-import com.mobileapplication.uniquestboard.Quest
-import com.mobileapplication.uniquestboard.Status
 
 public enum class ContainerAction{
     GetByPublisher,

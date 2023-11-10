@@ -12,9 +12,8 @@ import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.mobileapplication.uniquestboard.Quest
+import com.mobileapplication.uniquestboard.QuestDetailActivity
 import com.mobileapplication.uniquestboard.R
-import com.mobileapplication.uniquestboard.Status
 import java.time.format.DateTimeFormatter
 
 public interface OnItemClickListener{
@@ -39,9 +38,9 @@ class QuestAdapter(private val questList: List<Quest>) :
                 val position = adapterPosition
                 if(position!=RecyclerView.NO_POSITION){
                     val quest  = questList[position]
-//                    val intent = Intent(itemView.context,QuestDetail::class.java)
-//                    intent.putExtra("questID",quest.questID)
-//                    itemView.context.startActivity(intent)
+                    val intent = Intent(itemView.context,QuestDetailActivity::class.java)
+                    intent.putExtra("questID",quest.questID)
+                    itemView.context.startActivity(intent)
                 }
             }
         }
@@ -72,9 +71,9 @@ class QuestAdapter(private val questList: List<Quest>) :
     fun getCardColor(status: Status):Int{
         Log.d(TAG,"Status = " + status.toString())
         return when(status){
-            Status.PENDING,Status.IN_PROGRESS->return R.color.on_going_green;
+            Status.PENDING, Status.IN_PROGRESS->return R.color.on_going_green;
             Status.COMPLETED->R.color.completed_blue;
-            Status.FAILED,Status.EXPIRED,Status.INTERRUPTED->R.color.failed_red;
+            Status.FAILED, Status.EXPIRED, Status.INTERRUPTED->R.color.failed_red;
             else->
             {
                 Log.e(TAG,"No matching status!")

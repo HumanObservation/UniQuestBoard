@@ -1,5 +1,7 @@
 package com.mobileapplication.uniquestboard
 
+import com.mobileapplication.uniquestboard.ui.common.Identifiable
+
 public class User(
     itsc:String,
     pwdHash:String,

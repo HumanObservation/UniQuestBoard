@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <!-- 卡片容器 -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@color/on_going_green">
+
+        <!-- 卡片内容 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Quest标题 -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quest Title"
+                android:textSize="24sp"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+            <!-- 发布者 -->
+            <TextView
+                android:id="@+id/tvPublisher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Published by John Doe"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="4dp"/>
+
+            <!-- 发布时间和过期时间 -->
+
+
+            <TextView
+                android:id="@+id/tvPublishTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Published: 2023-01-01 10:00 AM"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"/>
+
+            <TextView
+                android:id="@+id/tvExpireTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Expires: 2023-01-31 10:00 AM"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"/>
+
+
+            <!-- Quest内容 -->
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quest content goes here. Limited to 300 characters."
+                android:maxLines="5"
+                android:ellipsize="end"
+                android:layout_marginTop="15dp"/>
+
+            <!-- Quest封面图 -->
+
+
+            <ImageView
+                android:id="@+id/ivCover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/side_nav_bar"
+                android:adjustViewBounds="true"/>
+
+            <!-- 隐藏的信息 -->
+            <TextView
+                android:id="@+id/tvHiddenInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hidden info: Contact the publisher at xxx-xxx-xxxx."
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_marginTop="8dp"/>
+
+               <!--揭示信息的按钮 -->
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/completed_blue"
+                android:text = "Take it!"
+                android:textColor="@color/cardview_dark_background">
+            </Button>
+<!--            <com.example.CustomButton-->
+<!--                android:id="@+id/btnRevealInfo"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Reveal Hidden Info"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:marginTop="8dp"/>-->
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
