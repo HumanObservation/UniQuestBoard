@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,13 +14,15 @@ import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.Status
 import com.mobileapplication.uniquestboard.databinding.FragmentAcceptedQuestsBinding
-import com.mobileapplication.uniquestboard.ui.common.QuestAdapter
+import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
+import com.mobileapplication.uniquestboard.ui.myQuests.MyQuestsViewModel
 import java.time.LocalDateTime
 
 class AcceptedQuestsFragment : QuestsContainer() {
 
     private var _binding: FragmentAcceptedQuestsBinding? = null
+    private val viewModel: AcceptedQuestsViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,7 +40,6 @@ savedInstanceState: Bundle?
     _binding = FragmentAcceptedQuestsBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
-    val questList = mutableListOf<Quest>()
     val taker = mutableListOf<String>()
     taker.add("someone")
     var contact = Contact("55556666","@some_one")
@@ -55,11 +57,10 @@ savedInstanceState: Bundle?
         "thankfulness",
         contact
     )
-
-    questList.add(quest1)
+        viewModel.questList.add(quest1)
     val recyclerView: RecyclerView = binding.recyclerView;
     recyclerView.layoutManager = LinearLayoutManager(activity)
-    recyclerView.adapter = QuestAdapter(questList)
+    recyclerView.adapter = QuestListAdapter(questList)
     return root
 }
 

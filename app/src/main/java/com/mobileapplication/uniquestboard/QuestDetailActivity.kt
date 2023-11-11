@@ -3,9 +3,8 @@ package com.mobileapplication.uniquestboard
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import com.mobileapplication.uniquestboard.databinding.ActivityMainBinding
 import com.mobileapplication.uniquestboard.databinding.ActivityQuestDetailBinding
-import com.mobileapplication.uniquestboard.ui.questDetail.QuestDetail
+import com.mobileapplication.uniquestboard.ui.questDetail.QuestDetailFragment
 
 class QuestDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityQuestDetailBinding
@@ -14,7 +13,7 @@ class QuestDetailActivity : AppCompatActivity() {
         binding = ActivityQuestDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (savedInstanceState == null) {
-            val fragment = QuestDetail()
+            val fragment = QuestDetailFragment()
 
             // Use FragmentTransaction to add the fragment to the container
             supportFragmentManager.beginTransaction()

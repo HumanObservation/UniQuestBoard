@@ -14,7 +14,7 @@ import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.Status
 import com.mobileapplication.uniquestboard.databinding.FragmentMyQuestsBinding
-import com.mobileapplication.uniquestboard.ui.common.QuestAdapter
+import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
 import java.time.LocalDateTime
 
@@ -49,7 +49,7 @@ class MyQuestsFragment : QuestsContainer() {
 
         val recyclerView: RecyclerView = binding.recyclerView;
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = QuestAdapter(myQuestsViewModel.questList)
+        recyclerView.adapter = QuestListAdapter(myQuestsViewModel.questList)
         return root
     }
 
