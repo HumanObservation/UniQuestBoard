@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.Status
 import com.mobileapplication.uniquestboard.databinding.FragmentBoardBinding
+import com.mobileapplication.uniquestboard.ui.acceptedQuests.AcceptedQuestsViewModel
 import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
 import java.time.LocalDateTime
@@ -20,6 +22,7 @@ import java.time.LocalDateTime
 class BoardFragment : QuestsContainer() {
 
     private var _binding: FragmentBoardBinding? = null
+    private val viewModel: BoardViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,6 +40,15 @@ class BoardFragment : QuestsContainer() {
         _binding = FragmentBoardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        if(viewModel.questList.isEmpty()) addTestQuest()
+        val recyclerView: RecyclerView = binding.recyclerView;
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = QuestListAdapter(viewModel.questList)
+        return root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addTestQuest(){
         val questList = mutableListOf<Quest>()
         val taker = mutableListOf<String>()
         taker.add("someone")
@@ -54,9 +66,9 @@ class BoardFragment : QuestsContainer() {
             image,
             "thankfulness",
             contact
-            )
+        )
 
-        questList.add(quest1)
+        viewModel.questList.add(quest1)
         taker.add("anyone else")
         var quest2: Quest = Quest(
             LocalDateTime.now(),
@@ -70,11 +82,7 @@ class BoardFragment : QuestsContainer() {
             "thankfulness",
             contact
         )
-        questList.add(quest2)
-        val recyclerView: RecyclerView = binding.recyclerView;
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = QuestListAdapter(questList)
-        return root
+        viewModel.questList.add(quest2)
     }
 
     override fun onDestroyView() {

@@ -18,6 +18,7 @@ import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.myQuests.MyQuestsViewModel
 import java.time.LocalDateTime
+import java.util.UUID
 
 class AcceptedQuestsFragment : QuestsContainer() {
 
@@ -40,29 +41,35 @@ savedInstanceState: Bundle?
     _binding = FragmentAcceptedQuestsBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
-    val taker = mutableListOf<String>()
-    taker.add("someone")
-    var contact = Contact("55556666","@some_one")
-    var status = Status.COMPLETED;
-    val image = mutableListOf<String>()
-    var quest1: Quest = Quest(
-        LocalDateTime.now(),
-        LocalDateTime.now(),
-        "admin",
-        taker,
-        "the title",
-        "the content",
-        status,
-        image,
-        "thankfulness",
-        contact
-    )
-        viewModel.questList.add(quest1)
+//    val taker = mutableListOf<String>()
+//    taker.add("someone")
+//    var contact = Contact("55556666","@some_one")
+//    var status = Status.COMPLETED;
+//    val image = mutableListOf<String>()
+//    var quest1: Quest = Quest(
+//        LocalDateTime.now(),
+//        LocalDateTime.now(),
+//        "admin",
+//        taker,
+//        "the title",
+//        "the content",
+//        status,
+//        image,
+//        "thankfulness",
+//        contact
+//    )
+//        viewModel.questList.add(quest1)
     val recyclerView: RecyclerView = binding.recyclerView;
     recyclerView.layoutManager = LinearLayoutManager(activity)
-    recyclerView.adapter = QuestListAdapter(questList)
+    recyclerView.adapter = QuestListAdapter(viewModel.questList)
     return root
 }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.questList.add(getAQuest(UUID.randomUUID()))
+    }
 
 override fun onDestroyView() {
     super.onDestroyView()
