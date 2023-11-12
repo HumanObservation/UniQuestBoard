@@ -1,5 +1,6 @@
 package com.mobileapplication.uniquestboard.ui.common
 
+import com.mobileapplication.uniquestboard.ui.base.Identifiable
 import java.time.LocalDateTime
 
 public enum class Status{

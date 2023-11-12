@@ -1,7 +1,6 @@
 package com.mobileapplication.uniquestboard.ui.questDetail
 
 import android.os.Build
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,10 +9,8 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestDetailBinding
-import com.mobileapplication.uniquestboard.databinding.QuestDetailBinding
-import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
+import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.common.getCardColor
 import java.util.UUID
 

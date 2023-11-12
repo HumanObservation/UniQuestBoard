@@ -14,9 +14,8 @@ import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.Status
 import com.mobileapplication.uniquestboard.databinding.FragmentBoardBinding
-import com.mobileapplication.uniquestboard.ui.acceptedQuests.AcceptedQuestsViewModel
 import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
-import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
+import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import java.time.LocalDateTime
 
 class BoardFragment : QuestsContainer() {

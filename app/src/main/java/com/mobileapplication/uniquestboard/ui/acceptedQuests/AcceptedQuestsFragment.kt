@@ -10,14 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mobileapplication.uniquestboard.ui.common.Contact
-import com.mobileapplication.uniquestboard.ui.common.Quest
-import com.mobileapplication.uniquestboard.ui.common.Status
 import com.mobileapplication.uniquestboard.databinding.FragmentAcceptedQuestsBinding
 import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
-import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
-import com.mobileapplication.uniquestboard.ui.myQuests.MyQuestsViewModel
-import java.time.LocalDateTime
+import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import java.util.UUID
 
 class AcceptedQuestsFragment : QuestsContainer() {
