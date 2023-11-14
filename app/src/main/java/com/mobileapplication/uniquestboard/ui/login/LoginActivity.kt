@@ -9,5 +9,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: LoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = LoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }
