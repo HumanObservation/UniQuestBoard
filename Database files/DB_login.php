@@ -10,14 +10,12 @@ if(mysqli_connect_errno())
         " (". mysqli_connect_errno() . ") "
         );
 }
-else echo "Connection success.";
 ?>
 
 <?php
 $itsc = "";
 $password = "";
 $result = "";
-
 if (isset($_POST["itsc"]) && !empty(trim($_POST["itsc"])))
 {
     $itsc = mysqli_real_escape_string($connection, trim($_POST["itsc"]));

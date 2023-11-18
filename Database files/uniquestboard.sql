@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- 主機： 127.0.0.1
--- 產生時間： 2023-11-11 17:06:32
+-- 主機： localhost
+-- 產生時間： 2023 年 11 月 18 日 21:47
 -- 伺服器版本： 10.4.28-MariaDB
 -- PHP 版本： 8.0.28
 
@@ -60,17 +60,21 @@ CREATE TABLE `quest` (
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
+  `itsc` varchar(20) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL
+  `password` varchar(30) NOT NULL,
+  `profilepic_url` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `user`
 --
 
-INSERT INTO `user` (`user_id`, `student_id`, `name`, `email`, `password`) VALUES
-(1, 20791134, 'Lam Siu Man', 'lsmis@connect.ust.hk', '12345');
+INSERT INTO `user` (`user_id`, `student_id`, `itsc`, `email`, `password`, `profilepic_url`) VALUES
+(1, 20791234, 'ivanaw', 'ivanaw@connect.ust.hk', '123456', 'www'),
+(2, 20791455, 'rtxc', 'rtxciu@connect.ust.hk', '888', NULL),
+(3, 20791255, 'trxc', 'trxcui@connect.ust.hk', '777', NULL),
+(4, 20792312, 'kami', 'kamida@connect.ust.hk', '123', NULL);
 
 --
 -- 已傾印資料表的索引
@@ -96,6 +100,28 @@ ALTER TABLE `quest`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
+--
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `quest`
+--
+ALTER TABLE `quest`
+  MODIFY `quest_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `user`
+--
+ALTER TABLE `user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- 已傾印資料表的限制式
