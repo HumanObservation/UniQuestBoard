@@ -2,22 +2,29 @@ package com.mobileapplication.uniquestboard.ui.board
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.mobileapplication.uniquestboard.databinding.FragmentBoardBinding
 import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
-import com.mobileapplication.uniquestboard.ui.common.Status
-import com.mobileapplication.uniquestboard.databinding.FragmentBoardBinding
-import com.mobileapplication.uniquestboard.ui.acceptedQuests.AcceptedQuestsViewModel
 import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
+import com.mobileapplication.uniquestboard.ui.common.Status
+import org.json.JSONObject
 import java.time.LocalDateTime
+
 
 class BoardFragment : QuestsContainer() {
 
@@ -40,7 +47,6 @@ class BoardFragment : QuestsContainer() {
         _binding = FragmentBoardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        if(viewModel.questList.isEmpty()) addTestQuest()
         val recyclerView: RecyclerView = binding.recyclerView;
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = QuestListAdapter(viewModel.questList)
@@ -85,6 +91,38 @@ class BoardFragment : QuestsContainer() {
         viewModel.questList.add(quest2)
     }
 
+    override fun onResume() {
+        var rq = Volley.newRequestQueue(requireActivity().getApplicationContext());
+        var url : String = "http://192.168.1.115/android/DB_showAllQuests.php";
+        var sr = object : StringRequest(
+            Request.Method.GET, url,
+            Response.Listener { response ->
+                val questList = mutableListOf<Quest>()
+                val taker = mutableListOf<String>()
+                taker.add("someone")
+                var contact = Contact("55556666","@some_one")
+                var status = Status.COMPLETED;
+                val image = mutableListOf<String>()
+                var quest1: Quest = Quest(
+                    LocalDateTime.now(),
+                    LocalDateTime.now(),
+                    "admin",
+                    taker,
+                    "the title",
+                    "the content",
+                    status,
+                    image,
+                    "thankfulness",
+                    contact
+                )
+
+                viewModel.questList.add(quest1)
+                Log.i("1", response.toString());
+                Toast.makeText(requireActivity().getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show(); },
+            Response.ErrorListener { e -> Toast.makeText(requireActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show() }) {}
+        rq.add(sr);
+        super.onResume()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
