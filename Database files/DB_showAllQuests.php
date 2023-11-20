@@ -16,10 +16,11 @@ if(mysqli_connect_errno())
 $query =  "SELECT * FROM orders;";
 $result = mysqli_query($connection, $query);
 $array = array();
-$count = 0;
+$count = 1;
 while($row = mysqli_fetch_array($result))
 {
-	$array[$count++] = array($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8]);
+	$array[$count] = array(array("order_id" => $row[0], "user_id" => $row[1], "title" => $row[2], "description" => $row[3], "publisher" => $row[4], "address" => $row[5], "image_url" => $row[6], "publish_date" =>$row[7], "remain_time" =>$row[8], "contact" =>$row[9], "reward" => $row[10], "status" => $row[11]));
+	$count++;
 }
 echo json_encode($array);
 mysqli_free_result($result);

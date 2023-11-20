@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Login successes", Toast.LENGTH_SHORT).show();
                         Intent(this, MainActivity::class.java).also { startActivity(it); }
                     }},
-                Response.ErrorListener { e -> Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show() })
+                Response.ErrorListener { e -> Toast.makeText(applicationContext, "Login fail, cannot find related user account.", Toast.LENGTH_SHORT).show() })
             {
                 override fun getParams(): MutableMap<String, String>? {
                     var params = HashMap<String, String>();
