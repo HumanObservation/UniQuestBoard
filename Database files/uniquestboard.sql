@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2023 年 11 月 18 日 21:47
+-- 產生時間： 2023 年 11 月 21 日 21:58
 -- 伺服器版本： 10.4.28-MariaDB
 -- PHP 版本： 8.0.28
 
@@ -32,12 +32,23 @@ CREATE TABLE `orders` (
   `user_id` int(11) NOT NULL,
   `title` varchar(30) NOT NULL,
   `description` varchar(200) NOT NULL,
+  `publisher` varchar(20) NOT NULL,
   `address` varchar(50) NOT NULL,
   `image_url` varchar(100) DEFAULT NULL,
   `publish_date` datetime NOT NULL,
-  `remain_date` datetime NOT NULL,
-  `reward` int(11) NOT NULL
+  `remain_time` int(11) NOT NULL,
+  `contact` varchar(40) NOT NULL,
+  `reward` int(11) NOT NULL,
+  `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `user_id`, `title`, `description`, `publisher`, `address`, `image_url`, `publish_date`, `remain_time`, `contact`, `reward`, `status`) VALUES
+(1, 1, 'I need coffee QQ', 'Please buy a Starbucks green tea latte for me, thx', 'ivanaw', 'LG1 1353', NULL, '2023-11-30 13:23:44', 1, '+852 9375 1234', 50, 'PENDING'),
+(2, 3, 'My hunger grows..', 'Please buy a Mc Big Mac set with mid cola, thx a lot', 'trxc', 'LG4 406', NULL, '2023-11-30 14:33:13', 1, 'IG:@qwq_886', 100, 'PENDING');
 
 -- --------------------------------------------------------
 
@@ -50,6 +61,14 @@ CREATE TABLE `quest` (
   `order_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `quest`
+--
+
+INSERT INTO `quest` (`quest_id`, `order_id`, `user_id`) VALUES
+(1, 1, 2),
+(2, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -109,13 +128,13 @@ ALTER TABLE `user`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `quest`
 --
 ALTER TABLE `quest`
-  MODIFY `quest_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `quest_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user`
