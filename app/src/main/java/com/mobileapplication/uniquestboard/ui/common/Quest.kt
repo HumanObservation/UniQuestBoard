@@ -1,8 +1,17 @@
 package com.mobileapplication.uniquestboard.ui.common
-
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.time.LocalDateTime
+import java.util.UUID
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import java.time.format.DateTimeFormatter
 
-public enum class Status{
+enum class Status {
     PENDING,      // 待接取
     IN_PROGRESS,  // 正在进行
     COMPLETED,    // 完成
@@ -11,36 +20,75 @@ public enum class Status{
     INTERRUPTED   // 中断 //接取但发布者取消任务
 }
 
-public class Contact(
-    whatsapp:String,
-    instagram:String,
-){
-    var whatsapp:String = whatsapp;
-    var instagram:String = instagram;
+data class Contact(
+    var whatsapp: String?,
+    var instagram: String?,
+) : java.io.Serializable
+
+data class Quest(
+    var publishTime: LocalDateTime,
+    var expiredTime: LocalDateTime,
+    var publisher: String,
+    var taker: MutableList<String>,
+    var title: String,
+    var content: String,
+    var status: Status,
+    var images: MutableList<String>,
+    var reward: String,
+    var contact: Contact,
+    val questID: UUID? = UUID.randomUUID(),
+) : java.io.Serializable{
+    fun serializeQuest():String{
+        var serializedQuest = SerializedQuest(
+            publishTime.toString(),
+            expiredTime.toString(),
+            publisher,
+            taker,
+            title,
+            content,
+            status.toString(),
+            images,
+            reward,
+            contact,
+            questID.toString()
+        )
+        val gson = Gson()
+//        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val json: String = gson.toJson(serializedQuest)
+//        var json = Json.encodeToString(serializedQuest)
+        return json
+    }
 }
+data class SerializedQuest(
+    var publishTime: String,
+    var expiredTime: String,
+    var publisher: String,
+    var taker: MutableList<String>,
+    var title: String,
+    var content: String,
+    var status: String,
+    var images: MutableList<String>,
+    var reward: String,
+    var contact: Contact,
+    val questID: String
 
-public class Quest(
-    publishTime : LocalDateTime,
-    expiredTime : LocalDateTime,
-    publisher:String,
-    taker:MutableList<String>,
-    title:String,
-    content:String,
-    status: Status,
-    images:MutableList<String>,
-    reward:String,
-    contact: Contact,
-): Identifiable(){
-
-    val publishTime:LocalDateTime = publishTime;
-    val expiredTime:LocalDateTime = expiredTime;
-    val publisher = publisher;
-    var taker = taker;
-    var title = title;
-    var content = content;
-    var status = status;
-    var images = images;
-    var reward = reward;
-    var contact = contact;
-
+): java.io.Serializable{
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun deserializeQuest(){
+        val curStatus = Status.valueOf(status)
+        var quest = Quest(
+            LocalDateTime.parse(publishTime),
+            LocalDateTime.parse(expiredTime),
+            publisher,
+            taker,
+            title,
+            content,
+            curStatus,
+            images,
+            reward,
+            contact,
+            UUID.fromString(questID)
+        )
+        Log.d("@@@",quest.publishTime.toString())
+    }
 }

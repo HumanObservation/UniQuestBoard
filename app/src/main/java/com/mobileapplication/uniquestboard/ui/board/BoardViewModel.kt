@@ -2,8 +2,7 @@ package com.mobileapplication.uniquestboard.ui.board
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.mobileapplication.uniquestboard.ui.common.QuestContainerViewModel
+import com.mobileapplication.uniquestboard.ui.base.QuestContainerViewModel
 
 class BoardViewModel : QuestContainerViewModel() {
 

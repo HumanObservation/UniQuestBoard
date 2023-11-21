@@ -24,7 +24,7 @@ class QuestListAdapter(private val questList: List<Quest>) :
     RecyclerView.Adapter<QuestListAdapter.ViewHolder>() {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    var df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    var df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
     var TAG:String = "QuestAdapter"
     private lateinit var context:Context;// = context
 
@@ -59,7 +59,6 @@ class QuestListAdapter(private val questList: List<Quest>) :
         holder.titleTextView.text = quest.title
         holder.contentTextView.text = quest.content
         holder.expireTimeTextView.text = "Expire : " + df.format(quest.expiredTime);
-
         val backgroundColor:Int = getCardColor(quest.status)
         holder.questCard.setCardBackgroundColor(ContextCompat.getColor(context, backgroundColor))
     }

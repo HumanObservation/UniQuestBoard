@@ -1,10 +1,9 @@
 package com.mobileapplication.uniquestboard.ui.questDetail
 
-import androidx.lifecycle.ViewModel
 import com.mobileapplication.uniquestboard.ui.common.Quest
-import com.mobileapplication.uniquestboard.ui.common.QuestContainerViewModel
+import com.mobileapplication.uniquestboard.ui.base.QuestContainerViewModel
 
 class QuestDetailViewModel : QuestContainerViewModel() {
-    public lateinit var curQuest: Quest
+    //public lateinit var curQuest: Quest
 
 }

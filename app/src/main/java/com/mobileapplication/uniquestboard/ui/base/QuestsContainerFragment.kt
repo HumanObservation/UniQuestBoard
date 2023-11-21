@@ -1,9 +1,12 @@
-package com.mobileapplication.uniquestboard.ui.common
+package com.mobileapplication.uniquestboard.ui.base
 
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.mobileapplication.uniquestboard.ui.common.Contact
+import com.mobileapplication.uniquestboard.ui.common.Quest
+import com.mobileapplication.uniquestboard.ui.common.Status
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.UUID
@@ -17,7 +20,12 @@ open class QuestsContainer:Fragment() {
     open val TAG = "QuestsContainer"
     val numOfQuestsPerGet:Int = 10;
     @RequiresApi(Build.VERSION_CODES.O)
-    var df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    val df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
+    @RequiresApi(Build.VERSION_CODES.O)
+    val df_dateOnly = DateTimeFormatter.ofPattern("yyyy/MM/dd")
+    @RequiresApi(Build.VERSION_CODES.O)
+    val df_timeOnly = DateTimeFormatter.ofPattern("HH:mm")
+
 
     //variable under is just for test
     val taker = mutableListOf<String>("someone")
@@ -46,7 +54,7 @@ open class QuestsContainer:Fragment() {
     )
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getQuests(action:ContainerAction, publisherID:String?, receiverID:String?, curStatus:Status?):MutableList<Quest>{
+    fun getQuests(action: ContainerAction, publisherID:String?, receiverID:String?, curStatus: Status?):MutableList<Quest>{
         //根据条件查找一定数量（numOfQuestsPerGet）的quest，并返回list
         return when(action){
 //            ContainerAction.GetByPublisher->{
@@ -68,7 +76,7 @@ open class QuestsContainer:Fragment() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getAQuest(questID: UUID):Quest{
+    fun getAQuest(questID: UUID): Quest {
         //get quest from database
         Log.d(TAG,"return the testQuest whose title is " + testQuest.title)
         return testQuest;

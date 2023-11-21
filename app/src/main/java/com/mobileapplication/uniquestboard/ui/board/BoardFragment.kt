@@ -19,9 +19,10 @@ import com.android.volley.toolbox.Volley
 import com.mobileapplication.uniquestboard.databinding.FragmentBoardBinding
 import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
-import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
-import com.mobileapplication.uniquestboard.ui.common.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.common.Status
+import com.mobileapplication.uniquestboard.databinding.FragmentBoardBinding
+import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
+import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import org.json.JSONObject
 import java.time.LocalDateTime
 
