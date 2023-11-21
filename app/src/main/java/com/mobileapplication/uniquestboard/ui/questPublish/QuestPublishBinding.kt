@@ -20,7 +20,6 @@ class QuestPublishBinding private constructor(private val rootView: View) : View
     override fun getRoot(): View {
         return rootView
     }
-
 }
 
 

@@ -20,7 +20,7 @@ open class QuestsContainer:Fragment() {
     open val TAG = "QuestsContainer"
     val numOfQuestsPerGet:Int = 10;
     @RequiresApi(Build.VERSION_CODES.O)
-    val df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
+    val df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
     @RequiresApi(Build.VERSION_CODES.O)
     val df_dateOnly = DateTimeFormatter.ofPattern("yyyy/MM/dd")
     @RequiresApi(Build.VERSION_CODES.O)
