@@ -13,7 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.mobileapplication.uniquestboard.databinding.ActivityMainBinding
-
+import com.mobileapplication.uniquestboard.ui.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener{
