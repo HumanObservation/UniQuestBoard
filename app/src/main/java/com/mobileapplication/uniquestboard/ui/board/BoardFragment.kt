@@ -16,7 +16,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.mobileapplication.uniquestboard.databinding.FragmentBoardBinding
+
 import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.Status
@@ -94,8 +94,9 @@ class BoardFragment : QuestsContainer() {
 
     override fun onResume() {
         var rq = Volley.newRequestQueue(requireActivity().getApplicationContext());
-        var url : String = "http://192.168.1.115/android/DB_showAllQuests.php";
-        var sr = object : JsonObjectRequest(
+        var url : String = "http://192.168.36.233:8080/android/DB_showAllQuests.php";
+        var sr = @RequiresApi(Build.VERSION_CODES.O)
+        object : JsonObjectRequest(
             Request.Method.GET, url, null,
             Response.Listener { response ->
                 val jsonObject: JSONObject = JSONObject(response.toString())

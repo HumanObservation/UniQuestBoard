@@ -37,7 +37,7 @@ open class QuestsContainer:Fragment() {
     val testQuest = Quest(
         LocalDateTime.now(),
         LocalDateTime.now(),
-        "admin",
+        "kami",
         taker,
         "the test title somehow the price is higher than expected 6666666666666666666666666666666666666666666666666666666666666666666" +
                 "11111111111111111111111111111111111111111111111111111111111111111111111111111"

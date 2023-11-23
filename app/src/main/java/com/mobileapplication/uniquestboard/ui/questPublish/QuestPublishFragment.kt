@@ -232,6 +232,8 @@ class QuestPublishFragment : QuestsContainer() {
         })
     }
 
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpPublishButton(){
         binding.includeQuestPublishForm.publishButton.setOnClickListener(){

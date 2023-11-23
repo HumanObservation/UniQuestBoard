@@ -12,9 +12,11 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.mobileapplication.uniquestboard.GlobalVariables
 import com.mobileapplication.uniquestboard.MainActivity
 import com.mobileapplication.uniquestboard.databinding.LoginBinding
 import com.mobileapplication.uniquestboard.R
+import com.mobileapplication.uniquestboard.User
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
@@ -27,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         var rbtn : Button = binding.register;
         var et1 : EditText = binding.itsc;
         var et2 : EditText = binding.password;
-        var url : String = "http://192.168.1.115/android/DB_login.php";
+        var url : String = "http://192.168.36.233:8080/android/DB_login.php";
         var rq = Volley.newRequestQueue(this);
         lbtn.setOnClickListener{
             var itsc : String = et1.text.toString();
@@ -37,9 +39,11 @@ class LoginActivity : AppCompatActivity() {
                     if(response.toString().trim() == "The record is found.")
                     {
                         Toast.makeText(applicationContext, "Login successes", Toast.LENGTH_SHORT).show();
+                        GlobalVariables.user = User(itsc,pw)
                         Intent(this, MainActivity::class.java).also { startActivity(it); }
                     }},
-                Response.ErrorListener { e -> Toast.makeText(applicationContext, "Login fail, cannot find related user account.", Toast.LENGTH_SHORT).show() })
+                Response.ErrorListener { e -> Toast.makeText(applicationContext,
+                    "Login fail.$e", Toast.LENGTH_SHORT).show() })
             {
                 override fun getParams(): MutableMap<String, String>? {
                     var params = HashMap<String, String>();

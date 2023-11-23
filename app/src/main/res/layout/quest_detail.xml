@@ -77,36 +77,88 @@
                     android:ellipsize="end"
                     android:layout_marginTop="15dp"/>
 
-                <!-- Quest封面图 -->
-
-
-                <ImageView
-                    android:id="@+id/ivCover"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/side_nav_bar"
-                    android:adjustViewBounds="true"/>
 
                 <!-- 隐藏的信息 -->
-                <TextView
-                    android:id="@+id/tvHiddenInfo"
+                <LinearLayout
+                    android:id="@+id/contactInformationContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hidden info: Contact the publisher at xxx-xxx-xxxx."
-                    android:textSize="12sp"
-                    android:visibility="gone"
-                    android:layout_marginTop="8dp"/>
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text = "Contact through:"
+                        android:textSize="18dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
+                    </TextView>
+                    <LinearLayout
+                        android:id = "@+id/whatsappContectInformation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="10dp">
+
+                        <TextView
+                            android:id="@+id/whatsappText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="WhatsApp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/whatsappNum"
+                            android:layout_marginLeft="10dp"
+                            android:text = "+852 11112234"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/instagramContectInformation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="10dp">
+
+                        <TextView
+                            android:id="@+id/instagramText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Instagram" />
+
+                        <TextView
+                            android:id="@+id/InstagramUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text = "myInstagram"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+<!--                </View>-->
 
                    <!--揭示信息的按钮 -->
                 <Button
-                    android:layout_width="100dp"
+                    android:id="@+id/takeButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:backgroundTint="@color/completed_blue"
-                    android:text = "Take it!"
+                    android:text = "Take it :)"
+                    android:textColor="@color/cardview_dark_background">
+                </Button>
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:backgroundTint="@color/completed_blue"
+                    android:text = "Cancel it :("
                     android:textColor="@color/cardview_dark_background">
                 </Button>
     <!--            <com.example.CustomButton-->

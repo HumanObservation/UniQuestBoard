@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.mobileapplication.uniquestboard.GlobalVariables
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestDetailBinding
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.common.getCardColor
@@ -42,6 +43,8 @@ class QuestDetailFragment : QuestsContainer() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.curQuest = getAQuest(UUID.randomUUID())
         setQuestDetail()
+        setUpContactInformation()
+        setUpStatusChangingGutton()
 
     }
 
@@ -70,6 +73,51 @@ class QuestDetailFragment : QuestsContainer() {
         //HiddenInfo
 
         //coverImage
+
+    }
+
+    private fun setUpContactInformation(){
+        //设定整个ContactInformation是否应该显示
+        if(viewModel.curQuest.taker.contains(GlobalVariables.user.itsc)){
+            binding.includeQuestDetail.contactInformationContainer.visibility = View.VISIBLE
+        }
+        else{
+            binding.includeQuestDetail.contactInformationContainer.visibility = View.GONE
+        }
+
+        //设定单个Contact是否显示，根据内容是否为空
+        var instagramUserName = binding.includeQuestDetail.InstagramUserName
+        var whatsappNumber = binding.includeQuestDetail.whatsappNum
+        if(viewModel.curQuest.contact.instagram.isNullOrBlank()){
+            binding.includeQuestDetail.instagramContectInformation.visibility = View.GONE
+        }
+        else{
+            instagramUserName.text =viewModel.curQuest.contact.instagram
+        }
+        if(viewModel.curQuest.contact.whatsapp.isNullOrBlank()){
+            binding.includeQuestDetail.whatsappContectInformation.visibility = View.GONE
+        }
+        else{
+            whatsappNumber.text = viewModel.curQuest.contact.whatsapp
+        }
+
+
+    }
+
+    private fun setUpStatusChangingGutton(){
+        val takeButton = binding.includeQuestDetail.takeButton
+        val cancelButton = binding.includeQuestDetail.cancelButton
+        if(viewModel.curQuest.publisher == GlobalVariables.user.itsc){
+            takeButton.visibility = View.GONE
+            cancelButton.visibility = View.VISIBLE
+        }
+        else if(viewModel.curQuest.taker.contains(GlobalVariables.user.itsc)){
+            takeButton.visibility = View.GONE
+        }
+        else{
+            takeButton.visibility = View.VISIBLE
+            cancelButton.visibility = View.GONE
+        }
 
     }
 
