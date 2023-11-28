@@ -17,7 +17,9 @@ open class QuestContainerViewModel : ViewModel() {
         _questList.value = newList
     }
     fun appendQuestList(appendList: MutableList<Quest>){
-        _questList.value?.addAll(appendList)
+        val currentList = _questList.value?.toMutableList() ?: mutableListOf()
+        currentList.addAll(appendList)
+        _questList.value= currentList
     }
     fun appendQuest(appendQuest:Quest){
         val currentList = _questList.value?.toMutableList() ?: mutableListOf()
