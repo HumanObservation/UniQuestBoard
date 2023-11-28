@@ -26,7 +26,7 @@ open class QuestContainerViewModel : ViewModel() {
         currentList.add(appendQuest)
         _questList.value = currentList
     }
-    public lateinit var curQuest: Quest
+    public var curQuest: Quest? = null;
 
 
 }

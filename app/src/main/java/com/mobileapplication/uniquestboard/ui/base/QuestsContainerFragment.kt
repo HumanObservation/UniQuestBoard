@@ -2,15 +2,26 @@ package com.mobileapplication.uniquestboard.ui.base
 
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.mobileapplication.uniquestboard.GlobalVariables
 import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.Status
+import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.UUID
 
+interface VolleyCallback {
+    fun onSuccess(response: Quest)
+    fun onError(error: String)
+}
 public enum class ContainerAction{
     GetByPublisher,
     GetByTaker,
@@ -51,7 +62,8 @@ open class QuestsContainer:Fragment() {
         status,
         image,
         "thankfulness",
-        contact
+        contact,
+        "g"
     )
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -77,9 +89,60 @@ open class QuestsContainer:Fragment() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getAQuest(questID: UUID): Quest {
+    fun getAQuest(questID: String?, callback: VolleyCallback){
         //get quest from database
-        Log.d(TAG,"return the testQuest whose title is " + testQuest.title)
-        return testQuest;
+        var rq = Volley.newRequestQueue(requireActivity().getApplicationContext());
+        var url : String = "http://${GlobalVariables.ip}:${GlobalVariables.port}/android/DB_getDetails.php";
+        var sr = object : StringRequest(
+            Request.Method.POST, url,
+            Response.Listener { response ->
+                val jsonObject: JSONObject = JSONObject(response.toString())
+                for(i in 1..jsonObject.length())
+                {
+                    Log.i(i.toString(), jsonObject.getString(i.toString()))
+                    val result = jsonObject.getString(i.toString()).toString()
+                    val sub = result.substring(1, result.length - 1);
+                    val js: JSONObject = JSONObject(sub)
+                    Log.i(i.toString(), js.getString("title"));
+                    val taker = mutableListOf<String>()
+                    taker.add("someone")
+                    var ct = js.getString("contact");
+                    var ctsub = ct.substring(0, 2);
+                    var contact : Contact;
+                    if(ctsub == "IG")
+                    {
+                        contact = Contact(null, js.getString("contact"))
+                    }
+                    else
+                    {
+                        contact = Contact(js.getString("contact"), null)
+                    }
+                    var status = Status.COMPLETED;
+                    var quest = Quest(
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        js.getString("publisher"),
+                        taker,
+                        js.getString("title"),
+                        js.getString("description"),
+                        status,
+                        image,
+                        js.getString("reward"),
+                        contact,
+                        js.getString("order_id")
+                    )
+                    callback.onSuccess(quest)
+                }
+
+                Toast.makeText(requireActivity().getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show(); },
+            Response.ErrorListener { e -> callback.onError(e.toString()); Log.e("w", e.toString()); Toast.makeText(requireActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show() })
+        {
+            override fun getParams(): MutableMap<String, String>? {
+                var params = HashMap<String, String>();
+                params.put("order_id", questID!!);
+                return params;
+            }
+        }
+        rq.add(sr);
     }
 }

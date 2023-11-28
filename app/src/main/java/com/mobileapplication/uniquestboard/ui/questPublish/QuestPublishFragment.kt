@@ -259,7 +259,7 @@ class QuestPublishFragment : QuestsContainer() {
             mutableListOf(),
             viewModel.reward,
             contact,
-            UUID.randomUUID())
+            "h")
         return newQuest;
     }
 

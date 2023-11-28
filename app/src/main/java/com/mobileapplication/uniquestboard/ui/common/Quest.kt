@@ -36,7 +36,7 @@ data class Quest(
     var images: MutableList<String>,
     var reward: String,
     var contact: Contact,
-    val questID: UUID? = UUID.randomUUID(),
+    val questID: String,
 ) : java.io.Serializable{
     fun serializeQuest():String{
         var serializedQuest = SerializedQuest(
@@ -87,7 +87,7 @@ data class SerializedQuest(
             images,
             reward,
             contact,
-            UUID.fromString(questID)
+            questID
         )
         Log.d("@@@",quest.publishTime.toString())
     }
