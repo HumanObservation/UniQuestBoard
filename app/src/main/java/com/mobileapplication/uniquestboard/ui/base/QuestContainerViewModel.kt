@@ -28,4 +28,5 @@ open class QuestContainerViewModel : ViewModel() {
     }
     public lateinit var curQuest: Quest
 
+
 }

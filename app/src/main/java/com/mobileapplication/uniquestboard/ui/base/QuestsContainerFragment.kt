@@ -31,14 +31,14 @@ open class QuestsContainer:Fragment() {
     //variable under is just for test
     val taker = mutableListOf<String>("someone")
     var contact = Contact("55556666","@admin")
-    var status = Status.FAILED;
+    var status = Status.PENDING;
     val image = mutableListOf<String>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     val testQuest = Quest(
         LocalDateTime.now(),
         LocalDateTime.now(),
-        "kami",
+        "else",
         taker,
         "the test title somehow the price is higher than expected 6666666666666666666666666666666666666666666666666666666666666666666" +
                 "11111111111111111111111111111111111111111111111111111111111111111111111111111"

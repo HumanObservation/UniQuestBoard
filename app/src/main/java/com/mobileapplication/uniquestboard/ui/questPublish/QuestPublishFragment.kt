@@ -241,7 +241,7 @@ class QuestPublishFragment : QuestsContainer() {
             var json = quest.serializeQuest()
 
             Log.d(TAG,json)
-            // add the quest to database
+            //TODO:把quest加入db
         }
     }
 

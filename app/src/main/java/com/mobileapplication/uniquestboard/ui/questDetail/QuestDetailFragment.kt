@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import com.mobileapplication.uniquestboard.GlobalVariables
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestDetailBinding
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
+import com.mobileapplication.uniquestboard.ui.common.Status
 import com.mobileapplication.uniquestboard.ui.common.getCardColor
 import java.util.UUID
 
@@ -44,7 +45,7 @@ class QuestDetailFragment : QuestsContainer() {
         viewModel.curQuest = getAQuest(UUID.randomUUID())
         setQuestDetail()
         setUpContactInformation()
-        setUpStatusChangingGutton()
+        setUpStatusChangingButton()
 
     }
 
@@ -56,7 +57,7 @@ class QuestDetailFragment : QuestsContainer() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
+        //
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -104,10 +105,19 @@ class QuestDetailFragment : QuestsContainer() {
 
     }
 
-    private fun setUpStatusChangingGutton(){
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setUpStatusChangingButton(){
+        //可视与否设定
         val takeButton = binding.includeQuestDetail.takeButton
         val cancelButton = binding.includeQuestDetail.cancelButton
-        if(viewModel.curQuest.publisher == GlobalVariables.user.itsc){
+        if(viewModel.curQuest.status == Status.COMPLETED ||
+            viewModel.curQuest.status == Status.INTERRUPTED||
+            viewModel.curQuest.status == Status.FAILED ||
+            viewModel.curQuest.status == Status.EXPIRED){
+            takeButton.visibility = View.GONE
+            cancelButton.visibility = View.GONE
+        }
+        else if(viewModel.curQuest.publisher == GlobalVariables.user.itsc){
             takeButton.visibility = View.GONE
             cancelButton.visibility = View.VISIBLE
         }
@@ -118,10 +128,27 @@ class QuestDetailFragment : QuestsContainer() {
             takeButton.visibility = View.VISIBLE
             cancelButton.visibility = View.GONE
         }
+        //按钮逻辑设定
+        takeButton.setOnClickListener(){
+            viewModel.curQuest.status = Status.IN_PROGRESS
+            viewModel.curQuest.taker.add(GlobalVariables.user.itsc)
+            //TODO:将更改同步到db
+            RefreshUI()
+        }
 
+        cancelButton.setOnClickListener(){
+            viewModel.curQuest.status = Status.INTERRUPTED
+            //TODO:将更改同步到db
+            RefreshUI()
+        }
     }
 
-
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun RefreshUI(){
+        setQuestDetail()
+        setUpContactInformation()
+        setUpStatusChangingButton()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
