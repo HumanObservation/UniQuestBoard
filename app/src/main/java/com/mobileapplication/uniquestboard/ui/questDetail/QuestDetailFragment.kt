@@ -62,6 +62,7 @@ class QuestDetailFragment : QuestsContainer() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setQuestDetail(){
+        //TODO:根据questID获取quest
         val quest = viewModel.curQuest
         Log.d(TAG,"Set Title to " + quest.title)
         val component = binding.includeQuestDetail
