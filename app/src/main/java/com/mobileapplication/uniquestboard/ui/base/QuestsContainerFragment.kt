@@ -18,6 +18,7 @@ public enum class ContainerAction{
 }
 open class QuestsContainer:Fragment() {
     open val TAG = "QuestsContainer"
+    open lateinit var action:ContainerAction
     val numOfQuestsPerGet:Int = 10;
     @RequiresApi(Build.VERSION_CODES.O)
     val df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")

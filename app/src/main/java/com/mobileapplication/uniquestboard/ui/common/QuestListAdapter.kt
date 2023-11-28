@@ -20,7 +20,7 @@ public interface OnItemClickListener{
     fun onItemCllick(position:Int)
 }
 
-class QuestListAdapter(private val questList: List<Quest>) :
+class QuestListAdapter(private val questList: MutableList<Quest>) :
     RecyclerView.Adapter<QuestListAdapter.ViewHolder>() {
 
     @RequiresApi(Build.VERSION_CODES.O)

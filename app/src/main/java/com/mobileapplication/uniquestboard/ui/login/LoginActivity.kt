@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         var rbtn : Button = binding.register;
         var et1 : EditText = binding.itsc;
         var et2 : EditText = binding.password;
-        var url : String = "http://192.168.36.233:8080/android/DB_login.php";
+        var url : String = "http://${GlobalVariables.ip}:${GlobalVariables.port}/android/DB_login.php";
         var rq = Volley.newRequestQueue(this);
         lbtn.setOnClickListener{
             var itsc : String = et1.text.toString();

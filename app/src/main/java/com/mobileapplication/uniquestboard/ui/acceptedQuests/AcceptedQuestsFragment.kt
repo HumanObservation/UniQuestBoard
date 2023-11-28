@@ -11,12 +11,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobileapplication.uniquestboard.databinding.FragmentAcceptedQuestsBinding
+import com.mobileapplication.uniquestboard.ui.base.ContainerAction
 import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import java.util.UUID
 
 class AcceptedQuestsFragment : QuestsContainer() {
 
+    override val TAG: String = "AcceptedQuestsFragment"
+    override var action: ContainerAction = ContainerAction.GetByTaker
     private var _binding: FragmentAcceptedQuestsBinding? = null
     private val viewModel: AcceptedQuestsViewModel by viewModels()
 
@@ -28,42 +31,23 @@ class AcceptedQuestsFragment : QuestsContainer() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-savedInstanceState: Bundle?
-): View {
+    savedInstanceState: Bundle?
+    ): View {
     val acceptedQuestsViewModel =
         ViewModelProvider(this).get(AcceptedQuestsViewModel::class.java)
 
     _binding = FragmentAcceptedQuestsBinding.inflate(inflater, container, false)
     val root: View = binding.root
-
-//    val taker = mutableListOf<String>()
-//    taker.add("someone")
-//    var contact = Contact("55556666","@some_one")
-//    var status = Status.COMPLETED;
-//    val image = mutableListOf<String>()
-//    var quest1: Quest = Quest(
-//        LocalDateTime.now(),
-//        LocalDateTime.now(),
-//        "admin",
-//        taker,
-//        "the title",
-//        "the content",
-//        status,
-//        image,
-//        "thankfulness",
-//        contact
-//    )
-//        viewModel.questList.add(quest1)
-    val recyclerView: RecyclerView = binding.recyclerView;
+    val recyclerView: RecyclerView = binding.questListInclude.recyclerView;
     recyclerView.layoutManager = LinearLayoutManager(activity)
-    recyclerView.adapter = QuestListAdapter(viewModel.questList)
+    recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
     return root
 }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.questList.add(getAQuest(UUID.randomUUID()))
+        viewModel.appendQuest(getAQuest(UUID.randomUUID()))
     }
 
 override fun onDestroyView() {

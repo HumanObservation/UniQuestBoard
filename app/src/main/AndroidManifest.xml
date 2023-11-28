@@ -24,7 +24,7 @@
             android:name=".QuestDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".QuestDetail"
+            android:name=".QuestPublishActivity"
             android:exported="false"
             android:label="@string/title_activity_quest_detail"
             android:theme="@style/Theme.UniQuestBoard" />

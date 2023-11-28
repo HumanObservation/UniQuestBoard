@@ -6,17 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.acceptedQuests.AcceptedQuestsFragment">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        <include
+            android:id = "@+id/questListInclude"
+            layout="@layout/quest_list">
+        </include>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp" />
-
-    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

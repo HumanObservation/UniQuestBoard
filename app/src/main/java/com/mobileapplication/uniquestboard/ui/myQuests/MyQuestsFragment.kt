@@ -35,7 +35,7 @@ class MyQuestsFragment : QuestsContainer() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(myQuestsViewModel.questList.isEmpty()) addQuestToQuestList()
+        if(myQuestsViewModel.liveQuestList.value?.isEmpty() == true) addQuestToQuestList()
     }
 
     override fun onCreateView(
@@ -47,16 +47,16 @@ class MyQuestsFragment : QuestsContainer() {
         _binding = FragmentMyQuestsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val recyclerView: RecyclerView = binding.recyclerView;
+        val recyclerView: RecyclerView = binding.questListInclude.recyclerView;
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = QuestListAdapter(myQuestsViewModel.questList)
+        recyclerView.adapter = myQuestsViewModel.liveQuestList.value?.let { QuestListAdapter(it) }
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        myQuestsViewModel.questList.clear()
+        myQuestsViewModel.liveQuestList.value?.clear()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -78,7 +78,7 @@ class MyQuestsFragment : QuestsContainer() {
             "thankfulness",
             contact
         )
-        myQuestsViewModel.questList.add(quest1)
+        myQuestsViewModel.appendQuest(quest1)
 
     }
 }
