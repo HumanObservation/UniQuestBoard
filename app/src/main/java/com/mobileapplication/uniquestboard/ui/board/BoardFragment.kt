@@ -61,6 +61,7 @@ class BoardFragment : QuestsContainer() {
             // 在这里更新UI或执行其他操作
             recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
         })
+        setHeaderAndFooter()
         return root
     }
 
@@ -148,7 +149,7 @@ class BoardFragment : QuestsContainer() {
         _binding = null
     }
 
-    fun setHeaderAndFooter(){
+    private fun setHeaderAndFooter(){
         val refreshLayout = binding.questListInclude.refreshLayout as RefreshLayout
         refreshLayout.setOnRefreshListener { refreshlayout ->
             viewModel.liveQuestList.value?.clear()
@@ -160,9 +161,11 @@ class BoardFragment : QuestsContainer() {
         }
         refreshLayout.setOnLoadMoreListener { refreshlayout ->
             //TODO:获取更多quest并且append到viewModel.questList中
-            refreshlayout.finishLoadMore(2000 /*,false*/) //传入false表示加载失败
+            //成功->
+            refreshlayout.finishLoadMore(2000 ) //传入false表示加载失败
+            //失败->
+            refreshlayout.finishLoadMore(false )
         }
     }
-
 
 }

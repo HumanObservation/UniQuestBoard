@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobileapplication.uniquestboard.ui.common.Contact
@@ -16,12 +17,13 @@ import com.mobileapplication.uniquestboard.ui.common.Status
 import com.mobileapplication.uniquestboard.databinding.FragmentMyQuestsBinding
 import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
+import com.scwang.smart.refresh.layout.api.RefreshLayout
 import java.time.LocalDateTime
 
 class MyQuestsFragment : QuestsContainer() {
 
     private var _binding: FragmentMyQuestsBinding? = null
-    private val myQuestsViewModel:MyQuestsViewModel by viewModels()
+    private val viewModel:MyQuestsViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -35,7 +37,7 @@ class MyQuestsFragment : QuestsContainer() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(myQuestsViewModel.liveQuestList.value?.isEmpty() == true) addQuestToQuestList()
+        if(viewModel.liveQuestList.value?.isEmpty() == true) addQuestToQuestList()
     }
 
     override fun onCreateView(
@@ -49,14 +51,19 @@ class MyQuestsFragment : QuestsContainer() {
 
         val recyclerView: RecyclerView = binding.questListInclude.recyclerView;
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = myQuestsViewModel.liveQuestList.value?.let { QuestListAdapter(it) }
+        recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
+        viewModel.liveQuestList.observe(viewLifecycleOwner, Observer { newDataList ->
+            // 在这里更新UI或执行其他操作
+            recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
+        })
+        setHeaderAndFooter()
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        myQuestsViewModel.liveQuestList.value?.clear()
+        viewModel.liveQuestList.value?.clear()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -78,7 +85,25 @@ class MyQuestsFragment : QuestsContainer() {
             "thankfulness",
             contact
         )
-        myQuestsViewModel.appendQuest(quest1)
+        viewModel.appendQuest(quest1)
 
+    }
+    private fun setHeaderAndFooter(){
+        val refreshLayout = binding.questListInclude.refreshLayout as RefreshLayout
+        refreshLayout.setOnRefreshListener { refreshlayout ->
+            viewModel.liveQuestList.value?.clear()
+            //TODO:重新获取numOfQuestsPerGet个quest并放入viewModel.questList中
+            //成功->
+            refreshlayout.finishRefresh(2000 /*,false*/) //传入false表示刷新失败
+            //失败->
+            refreshlayout.finishRefresh(false) //传入false表示刷新失败
+        }
+        refreshLayout.setOnLoadMoreListener { refreshlayout ->
+            //TODO:获取更多quest并且append到viewModel.questList中
+            //成功->
+            refreshlayout.finishLoadMore(2000 ) //传入false表示加载失败
+            //失败->
+            refreshlayout.finishLoadMore(false )
+        }
     }
 }
