@@ -2,6 +2,7 @@ package com.mobileapplication.uniquestboard.ui.questPublish
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -12,8 +13,16 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.mobileapplication.uniquestboard.GlobalVariables
+import com.mobileapplication.uniquestboard.MainActivity
+import com.mobileapplication.uniquestboard.User
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestPublishBinding
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.common.Contact
@@ -29,6 +38,10 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.UUID
 
+interface VolleyCallback {
+    fun onSuccess(response: Quest)
+    fun onError(error: String)
+}
 class QuestPublishFragment : QuestsContainer() {
 
     companion object {
@@ -65,9 +78,11 @@ class QuestPublishFragment : QuestsContainer() {
         val instagramInputField = binding.includeQuestPublishForm.InstagramInputField
         whatsappCheckBox.setOnClickListener(){check->
             whatsappInputField.isEnabled = whatsappCheckBox.isChecked
+            instagramCheckBox.isEnabled = !whatsappCheckBox.isChecked;
         }
         instagramCheckBox.setOnClickListener(){check->
             instagramInputField.isEnabled = instagramCheckBox.isChecked
+            whatsappCheckBox.isEnabled = !instagramCheckBox.isChecked;
         }
     }
 
@@ -241,7 +256,34 @@ class QuestPublishFragment : QuestsContainer() {
             var json = quest.serializeQuest()
 
             Log.d(TAG,json)
-            //TODO:把quest加入db
+            var rq = Volley.newRequestQueue(requireActivity().applicationContext);
+            var url : String = "http://${GlobalVariables.ip}:${GlobalVariables.port}/android/DB_QuestPublish.php";
+            var sr = object : StringRequest(
+                Request.Method.POST, url,
+                Response.Listener { response -> Log.i("t", response.toString()); },
+                Response.ErrorListener { e -> Log.e("e", e.toString()) })
+            {
+                override fun getParams(): MutableMap<String, String>? {
+                    var params = HashMap<String, String>();
+                    params.put("itsc", GlobalVariables.user.itsc);
+                    params.put("title", quest.title);
+                    params.put("description", quest.content);
+                    params.put("publisher", GlobalVariables.user.itsc);
+                    params.put("publish_date", quest.publishTime.toString());
+                    params.put("expired_date", quest.expiredTime.toString());
+                    if(quest.contact.whatsapp == null)
+                    {
+                        params.put("contact", quest.contact.instagram!!);
+                    }
+                    else
+                    {
+                        params.put("contact", quest.contact.whatsapp!!);
+                    }
+                    params.put("reward", quest.reward);
+                    return params;
+                }
+            }
+            rq.add(sr);
         }
     }
 

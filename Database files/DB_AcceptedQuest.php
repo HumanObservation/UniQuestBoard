@@ -29,7 +29,7 @@ $result = mysqli_query($connection, $query);
 
 while($row = mysqli_fetch_array($result))
 {
-	$array[$count] = array(array("order_id" => $row[2], "user_id" => $row[3], "title" => $row[4], "description" => $row[5], "publisher" => $row[6], "address" => $row[7], "image_url" => $row[8], "publish_date" =>$row[9], "remain_time" =>$row[10], "contact" =>$row[11], "reward" => $row[12], "status" => $row[13]));
+	$array[$count] = array(array("order_id" => $row[2], "user_id" => $row[3], "title" => $row[4], "description" => $row[5], "publisher" => $row[6], "publish_date" =>$row[7], "expired_date" =>$row[8], "contact" =>$row[9], "reward" => $row[10], "status" => $row[11]));
 	$count++;
 }
 if($count != 1)
