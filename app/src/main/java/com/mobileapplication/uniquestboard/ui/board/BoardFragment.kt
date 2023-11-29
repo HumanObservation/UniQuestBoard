@@ -1,8 +1,8 @@
 package com.mobileapplication.uniquestboard.ui.board
 
-import android.R
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +12,8 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -25,10 +27,14 @@ import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.common.Status
-import com.scwang.smart.refresh.footer.ClassicsFooter
-import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.time.LocalDateTime
 
@@ -56,51 +62,12 @@ class BoardFragment : QuestsContainer() {
 
         val recyclerView: RecyclerView = binding.questListInclude.recyclerView;
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
         viewModel.liveQuestList.observe(viewLifecycleOwner, Observer { newDataList ->
             // 在这里更新UI或执行其他操作
-            recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
+            updateAdapter(false)
         })
         setHeaderAndFooter()
         return root
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun addTestQuest(){
-        val questList = mutableListOf<Quest>()
-        val taker = mutableListOf<String>()
-        taker.add("someone")
-        var contact = Contact("55556666","@some_one")
-        var status = Status.COMPLETED;
-        val image = mutableListOf<String>()
-        var quest1: Quest = Quest(
-            LocalDateTime.now(),
-            LocalDateTime.now(),
-            "admin",
-            taker,
-            "the title",
-            "the content",
-            status,
-            image,
-            "thankfulness",
-            contact
-        )
-
-        viewModel.appendQuest(quest1)
-        taker.add("anyone else")
-        var quest2: Quest = Quest(
-            LocalDateTime.now(),
-            LocalDateTime.now(),
-            "someone else",
-            taker,
-            "the title aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "the content bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-            Status.PENDING,
-            image,
-            "thankfulness",
-            contact
-        )
-        viewModel.appendQuest(quest2)
     }
 
     override fun onResume() {
@@ -149,22 +116,59 @@ class BoardFragment : QuestsContainer() {
         _binding = null
     }
 
+    private fun updateAdapter(isLoad:Boolean) : Boolean{
+        val recyclerView: RecyclerView = binding.questListInclude.recyclerView;
+        if(isLoad &&
+            viewModel.liveQuestList.value?.isNotEmpty() == true &&
+            viewModel.liveQuestList.value?.size == viewModel.curPosition){
+            Toast.makeText(this.context,"No more quests!",Toast.LENGTH_LONG).show()
+            return false;
+        }
+        else if(viewModel.liveQuestList.value?.isNotEmpty() == true &&
+            viewModel.liveQuestList.value!!.size > viewModel.numOfQuestPerLoad*(viewModel.currrentPage+1)){
+            recyclerView.adapter = viewModel.liveQuestList.value?.take(viewModel.numOfQuestPerLoad*(viewModel.currrentPage+1)).let { QuestListAdapter(it) }
+            viewModel.curPosition = viewModel.numOfQuestPerLoad*(viewModel.currrentPage+1)
+            return true;
+        }
+        else if(viewModel.liveQuestList.value?.isNotEmpty() == true
+            &&viewModel.numOfQuestPerLoad*(viewModel.currrentPage)<viewModel.liveQuestList.value!!.size
+            && viewModel.liveQuestList.value!!.size<= viewModel.numOfQuestPerLoad*(viewModel.currrentPage+1)){
+            recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
+            viewModel.curPosition = viewModel.liveQuestList.value?.size!!
+            return true;
+        }
+        return false
+    }
+
+    private fun LoadMore(){
+        if(viewModel.currrentPage*viewModel.numOfQuestPerLoad < viewModel.curPosition){
+            viewModel.currrentPage++
+        }
+        if(updateAdapter(true)) viewModel.currrentPage++
+    }
+
     private fun setHeaderAndFooter(){
         val refreshLayout = binding.questListInclude.refreshLayout as RefreshLayout
         refreshLayout.setOnRefreshListener { refreshlayout ->
             viewModel.liveQuestList.value?.clear()
+            viewModel.currrentPage = 0
+            viewModel.curPosition = 0
             //TODO:重新获取numOfQuestsPerGet个quest并放入viewModel.questList中
             //成功->
             refreshlayout.finishRefresh(2000 /*,false*/) //传入false表示刷新失败
-            //失败->
             refreshlayout.finishRefresh(false) //传入false表示刷新失败
         }
         refreshLayout.setOnLoadMoreListener { refreshlayout ->
             //TODO:获取更多quest并且append到viewModel.questList中
             //成功->
-            refreshlayout.finishLoadMore(2000 ) //传入false表示加载失败
-            //失败->
-            refreshlayout.finishLoadMore(false )
+            refreshlayout.finishLoadMore(1000)
+            lifecycleScope.launch(Dispatchers.Main) {
+                // 在主线程中执行UI更新
+                // 延迟1秒后执行某个函数
+                delay(1000)
+                // 在主线程中执行某个函数
+                LoadMore()
+            }
         }
     }
 

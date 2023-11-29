@@ -3,7 +3,6 @@ package com.mobileapplication.uniquestboard.ui.common
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ public interface OnItemClickListener{
     fun onItemCllick(position:Int)
 }
 
-class QuestListAdapter(private val questList: MutableList<Quest>) :
+class QuestListAdapter(private val questList: List<Quest>?) :
     RecyclerView.Adapter<QuestListAdapter.ViewHolder>() {
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -37,9 +36,11 @@ class QuestListAdapter(private val questList: MutableList<Quest>) :
             itemView.setOnClickListener{
                 val position = adapterPosition
                 if(position!=RecyclerView.NO_POSITION){
-                    val quest  = questList[position]
+                    val quest  = questList?.get(position)
                     val intent = Intent(itemView.context,QuestDetailActivity::class.java)
-                    intent.putExtra("questID",quest.questID)
+                    if (quest != null) {
+                        intent.putExtra("questID",quest.questID)
+                    }
                     itemView.context.startActivity(intent)
                 }
             }
@@ -55,15 +56,19 @@ class QuestListAdapter(private val questList: MutableList<Quest>) :
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val quest = questList[position]
-        holder.titleTextView.text = quest.title
-        holder.contentTextView.text = quest.content
-        holder.expireTimeTextView.text = "Expire : " + df.format(quest.expiredTime);
-        val backgroundColor:Int = getCardColor(quest.status)
+        val quest = questList?.get(position)
+        if (quest != null) {
+            holder.titleTextView.text = quest.title
+        }
+        if (quest != null) {
+            holder.contentTextView.text = quest.content
+        }
+        holder.expireTimeTextView.text = "Expire : " + df.format(quest!!.expiredTime);
+        val backgroundColor:Int = quest!!.let { getCardColor(it.status) }
         holder.questCard.setCardBackgroundColor(ContextCompat.getColor(context, backgroundColor))
     }
 
     override fun getItemCount(): Int {
-        return questList.size
+        return questList!!.size
     }
 }

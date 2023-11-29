@@ -8,6 +8,9 @@ import com.mobileapplication.uniquestboard.ui.common.Quest
 open class QuestContainerViewModel : ViewModel() {
     //var questList = mutableListOf<Quest>()
     private val _questList = MutableLiveData<MutableList<Quest>>()
+    val numOfQuestPerLoad = 1;
+    var currrentPage = 0;
+    var curPosition:Int = 0;
 
     // 提供外部类访问LiveData的不可变版本
     val liveQuestList: MutableLiveData<MutableList<Quest>> get() = _questList
