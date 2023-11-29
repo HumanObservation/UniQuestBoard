@@ -84,4 +84,6 @@ dependencies {
     implementation("io.github.scwang90:refresh-layout-kernel:2.1.0")      //核心必须依赖
     implementation("io.github.scwang90:refresh-header-classics:2.1.0")
     implementation("io.github.scwang90:refresh-footer-ball:2.1.0")
+    implementation("io.github.scwang90:refresh-footer-classics:2.1.0")
+
 }

@@ -12,8 +12,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import com.mobileapplication.uniquestboard.GlobalVariables
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestPublishBinding
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.common.Contact
@@ -39,7 +41,8 @@ class QuestPublishFragment : QuestsContainer() {
     override val TAG:String = "QuestPublishFragment"
     private var _binding: FragmentQuestPublishBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var newQuest:Quest
+    private lateinit var newQuestContact:Contact
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -175,7 +178,7 @@ class QuestPublishFragment : QuestsContainer() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
-
+        viewModel.reward = binding.includeQuestPublishForm.reward.text.toString()
         binding.includeQuestPublishForm.reward.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.reward = s.toString()
@@ -237,45 +240,76 @@ class QuestPublishFragment : QuestsContainer() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpPublishButton(){
         binding.includeQuestPublishForm.publishButton.setOnClickListener(){
-            var quest = generateQuest()
-            var json = quest.serializeQuest()
-
-            Log.d(TAG,json)
-            //TODO:把quest加入db
+            if(!generateQuest()) return@setOnClickListener
+            else{
+                var json = newQuest.serializeQuest()
+                Log.d(TAG,json)
+                //TODO:把quest加入db
+            }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun generateQuest() : Quest{
-        var contact = generateContact()
-        var newQuest = Quest(
+    private fun generateQuest() : Boolean{
+        if(!generateContact()) return false
+        if(viewModel.title.isNullOrBlank()){
+            Log.i(TAG,"Title is empty!")
+            Toast.makeText(context,"Title is empty!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(viewModel.content.isNullOrBlank()){
+            Log.i(TAG,"Content is empty!")
+            Toast.makeText(context,"Content is empty!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(viewModel.reward.isNullOrBlank()){
+            Log.i(TAG,"Reward is empty!")
+            Toast.makeText(context,"Reward is empty!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        newQuest = Quest(
             LocalDateTime.now(),
             viewModel.expireTime,
-            "admin-waitForUpDate",
+            GlobalVariables.user.itsc,
             mutableListOf(),
             viewModel.title,
             viewModel.content,
             Status.PENDING,
             mutableListOf(),
             viewModel.reward,
-            contact,
+            newQuestContact,
             UUID.randomUUID())
-        return newQuest;
+        return true;
     }
 
-    private fun generateContact():Contact{
+    private fun generateContact():Boolean{
         val whatsappCheckBox = binding.includeQuestPublishForm.whatsappCheckBox
         val whatsappInputField = binding.includeQuestPublishForm.whatsappInputField
         val instagramCheckBox = binding.includeQuestPublishForm.instagramCheckBox
         val instagramInputField = binding.includeQuestPublishForm.InstagramInputField
-        var contact = Contact(null,null)
-        if(whatsappCheckBox.isEnabled){
-            contact.whatsapp = whatsappInputField.text.toString()
+        newQuestContact = Contact(null,null)
+        if(whatsappCheckBox.isChecked){
+            if(whatsappInputField.text.isNullOrBlank()){
+                Log.i(TAG,"whatsapp checked but is empty!")
+                Toast.makeText(context,"whatsapp checked but is empty!",Toast.LENGTH_LONG).show();
+                return false;
+            }
+            newQuestContact.whatsapp = whatsappInputField.text.toString()
         }
-        if(instagramCheckBox.isEnabled){
-            contact.instagram = instagramInputField.text.toString()
+        if(instagramCheckBox.isChecked){
+            if(instagramInputField.text.isNullOrBlank()){
+                Log.i(TAG,"instagram checked but is empty!")
+                Toast.makeText(context,"instagram checked but is empty!",Toast.LENGTH_LONG).show();
+                return false;
+            }
+            newQuestContact.instagram = instagramInputField.text.toString()
         }
-        return contact;
+        if(!whatsappCheckBox.isChecked && !instagramCheckBox.isChecked){
+            Log.i(TAG,"You have to provide at least one contact information!")
+            Toast.makeText(this.requireContext(),"You have to provide at least one contact information!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
 }
