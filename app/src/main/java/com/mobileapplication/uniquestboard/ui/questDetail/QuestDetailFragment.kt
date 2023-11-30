@@ -181,6 +181,23 @@ class QuestDetailFragment : QuestsContainer() {
         cancelButton.setOnClickListener(){
             viewModel.curQuest!!.status = Status.INTERRUPTED
             //TODO:将更改同步到db
+            val id: String? = arguments?.getString("questID")
+            var url : String = "http://${GlobalVariables.ip}:${GlobalVariables.port}/android/DB_CancelQuest.php";
+            var rq = Volley.newRequestQueue(requireActivity().applicationContext);
+            var sr = object : StringRequest(
+                Request.Method.POST, url,
+                Response.Listener { response ->
+                    Toast.makeText(requireActivity().applicationContext, "Login successes", Toast.LENGTH_SHORT).show(); },
+                Response.ErrorListener { e -> Toast.makeText(requireActivity().applicationContext,
+                    e.toString(), Toast.LENGTH_SHORT).show() })
+            {
+                override fun getParams(): MutableMap<String, String>? {
+                    var params = HashMap<String, String>();
+                    params.put("order_id", id!!);
+                    return params;
+                }
+            }
+            rq.add(sr);
             RefreshUI()
         }
     }
