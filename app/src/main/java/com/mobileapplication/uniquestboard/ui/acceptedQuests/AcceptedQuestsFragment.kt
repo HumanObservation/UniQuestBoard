@@ -87,6 +87,7 @@ class AcceptedQuestsFragment : QuestsContainer() {
             viewModel.curPosition = viewModel.liveQuestList.value?.size!!
             return true;
         }
+        recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
         return false
     }
 
@@ -99,9 +100,10 @@ class AcceptedQuestsFragment : QuestsContainer() {
     private fun setHeaderAndFooter(){
         val refreshLayout = binding.questListInclude.refreshLayout as RefreshLayout
         refreshLayout.setOnRefreshListener { refreshlayout ->
-            viewModel.liveQuestList.value?.clear()
             viewModel.currrentPage = 0
             viewModel.curPosition = 0
+            viewModel.liveQuestList.value?.clear()
+            updateAdapter(false)
             //TODO:重新获取numOfQuestsPerGet个quest并放入viewModel.questList中
             //成功->
             refreshlayout.finishRefresh(2000 /*,false*/) //传入false表示刷新失败

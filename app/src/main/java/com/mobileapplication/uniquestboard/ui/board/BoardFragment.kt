@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.core.updateTransition
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -137,6 +138,7 @@ class BoardFragment : QuestsContainer() {
             viewModel.curPosition = viewModel.liveQuestList.value?.size!!
             return true;
         }
+        recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
         return false
     }
 
@@ -150,9 +152,11 @@ class BoardFragment : QuestsContainer() {
     private fun setHeaderAndFooter(){
         val refreshLayout = binding.questListInclude.refreshLayout as RefreshLayout
         refreshLayout.setOnRefreshListener { refreshlayout ->
-            viewModel.liveQuestList.value?.clear()
             viewModel.currrentPage = 0
             viewModel.curPosition = 0
+            viewModel.liveQuestList.value?.clear()
+            updateAdapter(false)
+
             //TODO:重新获取numOfQuestsPerGet个quest并放入viewModel.questList中
             //成功->
             refreshlayout.finishRefresh(2000 /*,false*/) //传入false表示刷新失败

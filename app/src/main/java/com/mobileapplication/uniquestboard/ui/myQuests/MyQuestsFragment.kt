@@ -122,6 +122,7 @@ class MyQuestsFragment : QuestsContainer() {
             viewModel.curPosition = viewModel.liveQuestList.value?.size!!
             return true;
         }
+        recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
         return false
     }
 
