@@ -29,36 +29,23 @@
                     android:layout_margin="10dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
                     <!-- Title -->
-                    <com.google.android.material.textfield.TextInputLayout
+                    <EditText
+                        android:id = "@+id/title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="30">
+                        android:hint="Title"
+                        android:layout_marginBottom="15dp" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id = "@+id/title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Title"
-                            />
-
-                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Content -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="400">
 
-                        <com.google.android.material.textfield.TextInputEditText
+                        <EditText
                             android:id = "@+id/content"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Content" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:hint="Content"
+                            android:layout_marginBottom="15dp"/>
 
                     <!-- Image Upload -->
 <!--                    <ImageView-->
@@ -73,20 +60,14 @@
 
                     <!-- Contact Methods -->
 
-                    <com.google.android.material.textfield.TextInputLayout
+
+                    <EditText
+                        android:id = "@+id/reward"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="30">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id = "@+id/reward"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Reward"
-                            android:text = "Gratitude"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
+                        android:layout_marginBottom="15dp"
+                        android:hint="Reward"
+                        android:text = "Gratitude"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -98,21 +79,16 @@
                             android:layout_height="wrap_content"
                             android:text="WhatsApp" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="8dp"
-                            android:hint="Number">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="phone"
                                 android:id="@+id/whatsappInputField"
                                 android:enabled="false"
+                                android:layout_marginLeft="8dp"
+                                android:hint="Whatsapp Number"
                                  />
-                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -126,20 +102,15 @@
                             android:layout_height="wrap_content"
                             android:text="Instagram" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="8dp"
-                            android:hint="Username">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/InstagramInputField"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                />
-                        </com.google.android.material.textfield.TextInputLayout>
+                        <EditText
+                            android:id="@+id/instagramInputField"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:layout_marginLeft="8dp"
+                            android:hint="Username"
+                            />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"

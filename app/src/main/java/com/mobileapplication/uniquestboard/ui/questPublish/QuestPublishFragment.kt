@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.mobileapplication.uniquestboard.GlobalVariables
+import com.mobileapplication.uniquestboard.R
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestPublishBinding
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.common.Contact
@@ -40,7 +41,7 @@ class QuestPublishFragment : QuestsContainer() {
     private val viewModel: QuestPublishViewModel by viewModels()
     override val TAG:String = "QuestPublishFragment"
     private var _binding: FragmentQuestPublishBinding? = null
-    private val binding get() = _binding!!
+    public val binding get() = _binding!!
     private lateinit var newQuest:Quest
     private lateinit var newQuestContact:Contact
     override fun onCreateView(
@@ -65,7 +66,7 @@ class QuestPublishFragment : QuestsContainer() {
         val whatsappCheckBox = binding.includeQuestPublishForm.whatsappCheckBox
         val whatsappInputField = binding.includeQuestPublishForm.whatsappInputField
         val instagramCheckBox = binding.includeQuestPublishForm.instagramCheckBox
-        val instagramInputField = binding.includeQuestPublishForm.InstagramInputField
+        val instagramInputField = binding.includeQuestPublishForm.instagramInputField
         whatsappCheckBox.setOnClickListener(){check->
             whatsappInputField.isEnabled = whatsappCheckBox.isChecked
         }
@@ -155,7 +156,7 @@ class QuestPublishFragment : QuestsContainer() {
                 binding.includeQuestPublishForm.content to viewModel.content,
                 binding.includeQuestPublishForm.reward to viewModel.reward,
                 binding.includeQuestPublishForm.whatsappInputField to viewModel.whatsapp,
-                binding.includeQuestPublishForm.InstagramInputField to viewModel.instagram
+                binding.includeQuestPublishForm.instagramInputField to viewModel.instagram
             )
         binding.includeQuestPublishForm.title.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -200,7 +201,7 @@ class QuestPublishFragment : QuestsContainer() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
-        binding.includeQuestPublishForm.InstagramInputField.addTextChangedListener(object : TextWatcher {
+        binding.includeQuestPublishForm.instagramInputField.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.instagram = s.toString()
             }
@@ -234,8 +235,6 @@ class QuestPublishFragment : QuestsContainer() {
             }
         })
     }
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpPublishButton(){
@@ -286,7 +285,7 @@ class QuestPublishFragment : QuestsContainer() {
         val whatsappCheckBox = binding.includeQuestPublishForm.whatsappCheckBox
         val whatsappInputField = binding.includeQuestPublishForm.whatsappInputField
         val instagramCheckBox = binding.includeQuestPublishForm.instagramCheckBox
-        val instagramInputField = binding.includeQuestPublishForm.InstagramInputField
+        val instagramInputField = binding.includeQuestPublishForm.instagramInputField
         newQuestContact = Contact(null,null)
         if(whatsappCheckBox.isChecked){
             if(whatsappInputField.text.isNullOrBlank()){

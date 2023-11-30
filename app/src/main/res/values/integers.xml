@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <integer name="maxTitleCharacterCount">30</integer>
+    <integer name="maxContentCharacterCount">400</integer>
+    <integer name="maxRewardCharacterCount">30</integer>
+</resources>
