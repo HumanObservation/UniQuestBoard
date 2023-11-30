@@ -24,7 +24,7 @@ class QuestDetailFragment : QuestsContainer() {
     override val TAG:String = "QuestDetailFragment"
     private var _binding: FragmentQuestDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: QuestDetailViewModel by viewModels()
+    val viewModel: QuestDetailViewModel by viewModels()
     private val activity = getActivity()
     private val context = getContext()
 
@@ -71,6 +71,7 @@ class QuestDetailFragment : QuestsContainer() {
         component.tvExpireTime.text = "Expire : " + df.format(quest.expiredTime)
         component.tvPublishTime.text = "Published : "+df.format(quest.publishTime)
         component.tvPublisher.text = "Published by " + quest.publisher
+        component.tvReward.text = "Reward : "+ quest.reward
         component.questDetailCard.setCardBackgroundColor(ContextCompat.getColor(requireContext(), getCardColor(quest.status)))
         //HiddenInfo
 
@@ -80,7 +81,8 @@ class QuestDetailFragment : QuestsContainer() {
 
     private fun setUpContactInformation(){
         //设定整个ContactInformation是否应该显示
-        if(viewModel.curQuest.taker.contains(GlobalVariables.user.itsc)){
+        if(viewModel.curQuest.taker.contains(GlobalVariables.user.itsc) ||
+            viewModel.curQuest.publisher == GlobalVariables.user.itsc){
             binding.includeQuestDetail.contactInformationContainer.visibility = View.VISIBLE
         }
         else{

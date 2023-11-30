@@ -76,6 +76,15 @@
                     android:maxLines="5"
                     android:ellipsize="end"
                     android:layout_marginTop="15dp"/>
+                <TextView
+                    android:id="@+id/tvReward"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reward:"
+                    android:maxLines="5"
+                    android:ellipsize="end"
+                    android:layout_marginTop="15dp"/>
+
 
 
                 <!-- 隐藏的信息 -->
