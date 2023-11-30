@@ -111,23 +111,30 @@ class QuestDetailFragment : QuestsContainer() {
         //可视与否设定
         val takeButton = binding.includeQuestDetail.takeButton
         val cancelButton = binding.includeQuestDetail.cancelButton
+        val completeButton = binding.includeQuestDetail.completeButton
         if(viewModel.curQuest.status == Status.COMPLETED ||
             viewModel.curQuest.status == Status.INTERRUPTED||
             viewModel.curQuest.status == Status.FAILED ||
             viewModel.curQuest.status == Status.EXPIRED){
             takeButton.visibility = View.GONE
             cancelButton.visibility = View.GONE
+            completeButton.visibility = View.GONE
+
         }
         else if(viewModel.curQuest.publisher == GlobalVariables.user.itsc){
             takeButton.visibility = View.GONE
             cancelButton.visibility = View.VISIBLE
+            completeButton.visibility = View.GONE
         }
         else if(viewModel.curQuest.taker.contains(GlobalVariables.user.itsc)){
+            cancelButton.visibility = View.GONE
             takeButton.visibility = View.GONE
+            completeButton.visibility = View.VISIBLE
         }
         else{
             takeButton.visibility = View.VISIBLE
             cancelButton.visibility = View.GONE
+            completeButton.visibility = View.GONE
         }
         //按钮逻辑设定
         takeButton.setOnClickListener(){
@@ -139,6 +146,12 @@ class QuestDetailFragment : QuestsContainer() {
 
         cancelButton.setOnClickListener(){
             viewModel.curQuest.status = Status.INTERRUPTED
+            //TODO:将更改同步到db
+            RefreshUI()
+        }
+
+        completeButton.setOnClickListener(){
+            viewModel.curQuest.status = Status.COMPLETED
             //TODO:将更改同步到db
             RefreshUI()
         }

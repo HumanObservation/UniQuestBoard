@@ -139,7 +139,7 @@ class MyQuestsFragment : QuestsContainer() {
             viewModel.curPosition = 0
             //TODO:重新获取numOfQuestsPerGet个quest并放入viewModel.questList中
             //成功->
-            refreshlayout.finishRefresh(2000 /*,false*/) //传入false表示刷新失败
+            refreshlayout.finishRefresh(2000 /*,false*/) 
             //失败->
             refreshlayout.finishRefresh(false) //传入false表示刷新失败
         }

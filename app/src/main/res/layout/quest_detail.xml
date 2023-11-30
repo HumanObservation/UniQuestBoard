@@ -161,6 +161,16 @@
                     android:text = "Cancel it :("
                     android:textColor="@color/cardview_dark_background">
                 </Button>
+                <Button
+                    android:id="@+id/completeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:backgroundTint="@color/completed_blue"
+                    android:text = "Completed! XD"
+                    android:textColor="@color/cardview_dark_background">
+                </Button>
     <!--            <com.example.CustomButton-->
     <!--                android:id="@+id/btnRevealInfo"-->
     <!--                android:layout_width="wrap_content"-->
