@@ -1,6 +1,5 @@
 package com.mobileapplication.uniquestboard.ui.myQuests
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log

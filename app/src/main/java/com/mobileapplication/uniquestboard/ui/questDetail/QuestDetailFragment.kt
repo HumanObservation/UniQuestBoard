@@ -1,15 +1,23 @@
 package com.mobileapplication.uniquestboard.ui.questDetail
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.mobileapplication.uniquestboard.GlobalVariables
+import com.mobileapplication.uniquestboard.MainActivity
+import com.mobileapplication.uniquestboard.User
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestDetailBinding
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.base.VolleyCallback
@@ -18,6 +26,10 @@ import com.mobileapplication.uniquestboard.ui.common.Status
 import com.mobileapplication.uniquestboard.ui.common.getCardColor
 import java.util.UUID
 
+interface VolleyCallback {
+    fun onSuccess(response: Quest)
+    fun onError(error: String)
+}
 class QuestDetailFragment : QuestsContainer() {
 
     companion object {
@@ -118,6 +130,7 @@ class QuestDetailFragment : QuestsContainer() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpStatusChangingButton(){
+        Log.i("gg", viewModel.curQuest!!.status.toString());
         //可视与否设定
         val takeButton = binding.includeQuestDetail.takeButton
         val cancelButton = binding.includeQuestDetail.cancelButton
@@ -144,6 +157,24 @@ class QuestDetailFragment : QuestsContainer() {
             viewModel.curQuest!!.status = Status.IN_PROGRESS
             viewModel.curQuest!!.taker.add(GlobalVariables.user.itsc)
             //TODO:将更改同步到db
+            val id: String? = arguments?.getString("questID")
+            var url : String = "http://${GlobalVariables.ip}:${GlobalVariables.port}/android/DB_AcceptQuest.php";
+            var rq = Volley.newRequestQueue(requireActivity().applicationContext);
+            var sr = object : StringRequest(
+                Request.Method.POST, url,
+                Response.Listener { response ->
+                    Toast.makeText(requireActivity().applicationContext, "Login successes", Toast.LENGTH_SHORT).show(); },
+                Response.ErrorListener { e -> Toast.makeText(requireActivity().applicationContext,
+                    e.toString(), Toast.LENGTH_SHORT).show() })
+            {
+                override fun getParams(): MutableMap<String, String>? {
+                    var params = HashMap<String, String>();
+                    params.put("itsc", GlobalVariables.user.itsc);
+                    params.put("order_id", id!!);
+                    return params;
+                }
+            }
+            rq.add(sr);
             RefreshUI()
         }
 

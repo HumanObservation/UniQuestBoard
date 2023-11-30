@@ -2,14 +2,8 @@ package com.mobileapplication.uniquestboard.ui.common
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.time.LocalDateTime
-import java.util.UUID
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import java.time.format.DateTimeFormatter
 
 enum class Status {
     PENDING,      // 待接取

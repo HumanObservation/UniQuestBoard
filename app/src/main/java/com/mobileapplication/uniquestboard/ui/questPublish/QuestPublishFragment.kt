@@ -2,7 +2,6 @@ package com.mobileapplication.uniquestboard.ui.questPublish
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -13,7 +12,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.android.volley.Request
@@ -21,22 +19,16 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.mobileapplication.uniquestboard.GlobalVariables
-import com.mobileapplication.uniquestboard.MainActivity
-import com.mobileapplication.uniquestboard.User
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestPublishBinding
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.Status
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Calendar
 import java.util.Locale
-import java.util.UUID
 
 interface VolleyCallback {
     fun onSuccess(response: Quest)

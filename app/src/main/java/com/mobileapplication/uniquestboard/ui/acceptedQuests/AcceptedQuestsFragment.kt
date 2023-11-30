@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.mobileapplication.uniquestboard.GlobalVariables
@@ -30,7 +29,6 @@ import com.mobileapplication.uniquestboard.ui.common.Status
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import org.json.JSONObject
 import java.time.LocalDateTime
-import java.util.UUID
 
 interface VolleyCallback {
     fun onSuccess(response: Quest)

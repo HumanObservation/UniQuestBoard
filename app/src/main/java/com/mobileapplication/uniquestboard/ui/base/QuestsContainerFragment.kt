@@ -16,7 +16,6 @@ import com.mobileapplication.uniquestboard.ui.common.Status
 import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.UUID
 
 interface VolleyCallback {
     fun onSuccess(response: Quest)
@@ -125,7 +124,7 @@ open class QuestsContainer:Fragment() {
                         taker,
                         js.getString("title"),
                         js.getString("description"),
-                        status,
+                        enumValues<Status>().firstOrNull { it.ordinal == js.getString("status").toInt() }!!,
                         image,
                         js.getString("reward"),
                         contact,

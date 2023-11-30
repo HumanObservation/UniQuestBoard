@@ -1,6 +1,5 @@
 package com.mobileapplication.uniquestboard.ui.board
 
-import android.R
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -26,10 +25,7 @@ import com.mobileapplication.uniquestboard.ui.common.Contact
 import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.common.Status
-import com.scwang.smart.refresh.footer.ClassicsFooter
-import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import org.json.JSONObject
 import java.time.LocalDateTime
 
