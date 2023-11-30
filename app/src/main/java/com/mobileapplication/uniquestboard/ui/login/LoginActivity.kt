@@ -1,13 +1,11 @@
 package com.mobileapplication.uniquestboard.ui.login
 
-import android.content.ContextParams
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -15,9 +13,7 @@ import com.android.volley.toolbox.Volley
 import com.mobileapplication.uniquestboard.GlobalVariables
 import com.mobileapplication.uniquestboard.MainActivity
 import com.mobileapplication.uniquestboard.databinding.LoginBinding
-import com.mobileapplication.uniquestboard.R
 import com.mobileapplication.uniquestboard.User
-import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: LoginBinding

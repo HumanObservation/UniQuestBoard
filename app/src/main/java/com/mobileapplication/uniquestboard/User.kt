@@ -5,7 +5,7 @@ import java.util.UUID
 public class User(
     //val userID: UUID? = UUID.randomUUID(),
     itsc:String,
-    pwdHash:String,
+    pwdHash: String,
     //profileImage:String,
 ){
     val itsc = itsc;

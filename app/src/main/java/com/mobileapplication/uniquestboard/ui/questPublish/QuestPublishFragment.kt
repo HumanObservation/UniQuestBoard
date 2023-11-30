@@ -38,7 +38,7 @@ class QuestPublishFragment : QuestsContainer() {
         fun newInstance() = QuestPublishFragment()
     }
 
-    private val viewModel: QuestPublishViewModel by viewModels()
+    val viewModel: QuestPublishViewModel by viewModels()
     override val TAG:String = "QuestPublishFragment"
     private var _binding: FragmentQuestPublishBinding? = null
     public val binding get() = _binding!!
@@ -249,7 +249,7 @@ class QuestPublishFragment : QuestsContainer() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun generateQuest() : Boolean{
+    public fun generateQuest() : Boolean{
         if(!generateContact()) return false
         if(viewModel.title.isNullOrBlank()){
             Log.i(TAG,"Title is empty!")
@@ -281,7 +281,7 @@ class QuestPublishFragment : QuestsContainer() {
         return true;
     }
 
-    private fun generateContact():Boolean{
+    public fun generateContact():Boolean{
         val whatsappCheckBox = binding.includeQuestPublishForm.whatsappCheckBox
         val whatsappInputField = binding.includeQuestPublishForm.whatsappInputField
         val instagramCheckBox = binding.includeQuestPublishForm.instagramCheckBox
