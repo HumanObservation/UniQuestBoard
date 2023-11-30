@@ -64,7 +64,7 @@ $result = mysqli_query($connection, $query);
 if($row = mysqli_fetch_assoc($result))
 {
 	$user_id = $row['user_id'];
-	$insert = "INSERT INTO orders (`user_id`, `title`, `description`, `publisher`, `publish_date`, `expired_date`, `contact`, `reward`, `status`) VALUES ('".$user_id."', '".$title."', '".$description."', '".$publisher."', '".$publish_date."', '".$expired_date."', '".$contact."', '".$reward."', 'pending')";
+	$insert = "INSERT INTO orders (`user_id`, `title`, `description`, `publisher`, `publish_date`, `expired_date`, `contact`, `reward`, `status`) VALUES ('".$user_id."', '".$title."', '".$description."', '".$publisher."', '".$publish_date."', '".$expired_date."', '".$contact."', '".$reward."', '0')";
 	if (mysqli_query($connection, $insert)) 
 	{
         echo "Data inserted successfully!";
