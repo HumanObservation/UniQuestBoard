@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2023 年 11 月 30 日 04:59
+-- 產生時間： 2023 年 11 月 30 日 05:06
 -- 伺服器版本： 10.4.28-MariaDB
 -- PHP 版本： 8.0.28
 
@@ -45,8 +45,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `title`, `description`, `publisher`, `publish_date`, `expired_date`, `contact`, `reward`, `status`) VALUES
-(1, 1, 'I need coffee QQ', 'Please buy a Starbucks green tea latte for me, thx', 'ivanaw', '2023-11-30 13:23', '2023-11-30 14:23', '9375 1234', '50', '0'),
-(2, 3, 'My hunger grows..', 'Please buy a Mc Big Mac set with mid cola, thx a lot', 'trxc', '2023-11-30 14:33', '2023-11-30 14:43', 'IG:@qwq_886', '100', '0'),
+(1, 1, 'I need coffee QQ', 'Please buy a Starbucks green tea latte for me, thx', 'ivanaw', '2023-11-30 13:23', '2023-11-30 14:23', '9375 1234', '50', '1'),
+(2, 3, 'My hunger grows..', 'Please buy a Mc Big Mac set with mid cola, thx a lot', 'trxc', '2023-11-30 14:33', '2023-11-30 14:43', 'IG:@qwq_886', '100', '1'),
 (3, 4, 'Urgent!! Pineapplepen', 'Urgent!! Please bring me a pen. I will have a exam after 10 mins....', 'kami', '2023-11-30T01:41:18.992', '2023-12-01T01:50:09.646', '9375 1234', 'free lunch', '5'),
 (4, 4, 'Need IT help', 'My laptop is broken and idk what happens..', 'kami', '2023-12-01T01:45:18.174', '2023-12-01T01:48:05.026', '3333 5555', '$100', '0'),
 (5, 9, 'SOS Tissue', 'I am in LG1 Man WC SOS', 'pvpaa', '2023-12-01T01:50:03.642', '2023-12-01T01:50:09.646', '9853 2323', '$500', '0');

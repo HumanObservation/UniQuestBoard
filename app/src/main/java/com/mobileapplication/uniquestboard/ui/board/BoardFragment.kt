@@ -87,7 +87,10 @@ class BoardFragment : QuestsContainer() {
                         contact,
                         js.getString("order_id")
                     )
-                    callback.onSuccess(quest1)
+                    if(js.getString("publisher") != GlobalVariables.user.itsc && js.getString("status") == "0")
+                    {
+                        callback.onSuccess(quest1)
+                    }
                 }
                 Log.i(TAG, response.toString());
                 Toast.makeText(requireActivity().getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show(); },
