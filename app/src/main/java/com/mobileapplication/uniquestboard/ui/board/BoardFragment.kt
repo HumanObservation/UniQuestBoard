@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -26,6 +27,9 @@ import com.mobileapplication.uniquestboard.ui.common.Quest
 import com.mobileapplication.uniquestboard.ui.common.QuestListAdapter
 import com.mobileapplication.uniquestboard.ui.common.Status
 import com.scwang.smart.refresh.layout.api.RefreshLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.time.LocalDateTime
 
@@ -41,6 +45,7 @@ class BoardFragment : QuestsContainer() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    override val TAG: String = "BoardFragment"
 
     private fun getResponse(callback: VolleyCallback)
     {
@@ -72,7 +77,7 @@ class BoardFragment : QuestsContainer() {
                     {
                         contact = Contact(js.getString("contact"), null)
                     }
-                    var status = Status.COMPLETED;
+                    var status = Status.values()[js.getString("status").toInt()];
                     val image = mutableListOf<String>()
                     var quest1: Quest = Quest(
                         LocalDateTime.now(),
@@ -87,7 +92,7 @@ class BoardFragment : QuestsContainer() {
                         contact,
                         js.getString("order_id")
                     )
-                    if(js.getString("publisher") != GlobalVariables.user.itsc && js.getString("status") == "0")
+                    if(js.getString("publisher") != GlobalVariables.user.itsc && (js.getString("status") == "0" || js.getString("status") == "1"))
                     {
                         callback.onSuccess(quest1)
                     }
@@ -98,6 +103,7 @@ class BoardFragment : QuestsContainer() {
         rq.add(sr);
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         getResponse(object : VolleyCallback {
             override fun onSuccess(response: Quest) {
@@ -105,6 +111,7 @@ class BoardFragment : QuestsContainer() {
             }
 
             override fun onError(error: String) {
+                Log.e(TAG,"getResponse Error")
             }
         })
         super.onCreate(savedInstanceState)
@@ -116,21 +123,22 @@ class BoardFragment : QuestsContainer() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(BoardViewModel::class.java)
-
         _binding = FragmentBoardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val recyclerView: RecyclerView = binding.questListInclude.recyclerView;
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
         viewModel.liveQuestList.observe(viewLifecycleOwner, Observer { newDataList ->
             // 在这里更新UI或执行其他操作
-            recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
+            updateAdapter(false)
         })
         setHeaderAndFooter()
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //Log.i(TAG,"Enter onViewCreated")
+        super.onViewCreated(view, savedInstanceState)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -199,11 +207,47 @@ class BoardFragment : QuestsContainer() {
         }
         refreshLayout.setOnLoadMoreListener { refreshlayout ->
             //TODO:获取更多quest并且append到viewModel.questList中
-            //成功->
-            refreshlayout.finishLoadMore(2000 ) //传入false表示加载失败
-            //失败->
-            refreshlayout.finishLoadMore(false )
+            refreshlayout.finishLoadMore(1000)
+            lifecycleScope.launch(Dispatchers.Main) {
+                // 在主线程中执行UI更新
+                // 延迟1秒后执行某个函数
+                delay(1000)
+                // 在主线程中执行某个函数
+                LoadMore()
+            }
         }
+    }
+
+    private fun updateAdapter(isLoad:Boolean) : Boolean{
+        val recyclerView: RecyclerView = binding.questListInclude.recyclerView;
+        if(isLoad &&
+            viewModel.liveQuestList.value?.isNotEmpty() == true &&
+            viewModel.liveQuestList.value?.size == viewModel.curPosition){
+            Toast.makeText(this.context,"No more quests!", Toast.LENGTH_LONG).show()
+            return false;
+        }
+        else if(viewModel.liveQuestList.value?.isNotEmpty() == true &&
+            viewModel.liveQuestList.value!!.size > viewModel.numOfQuestPerLoad*(viewModel.currrentPage+1)){
+            recyclerView.adapter = viewModel.liveQuestList.value?.take(viewModel.numOfQuestPerLoad*(viewModel.currrentPage+1)).let { QuestListAdapter(it) }
+            viewModel.curPosition = viewModel.numOfQuestPerLoad*(viewModel.currrentPage+1)
+            return true;
+        }
+        else if(viewModel.liveQuestList.value?.isNotEmpty() == true
+            &&viewModel.numOfQuestPerLoad*(viewModel.currrentPage)<viewModel.liveQuestList.value!!.size
+            && viewModel.liveQuestList.value!!.size<= viewModel.numOfQuestPerLoad*(viewModel.currrentPage+1)){
+            recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
+            viewModel.curPosition = viewModel.liveQuestList.value?.size!!
+            return true;
+        }
+        recyclerView.adapter = viewModel.liveQuestList.value?.let { QuestListAdapter(it) }
+        return false
+    }
+
+    private fun LoadMore(){
+        if(viewModel.currrentPage*viewModel.numOfQuestPerLoad < viewModel.curPosition){
+            viewModel.currrentPage++
+        }
+        if(updateAdapter(true)) viewModel.currrentPage++
     }
 
 }

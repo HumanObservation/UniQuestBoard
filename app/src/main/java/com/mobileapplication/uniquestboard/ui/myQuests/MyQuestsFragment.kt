@@ -144,7 +144,6 @@ class MyQuestsFragment : QuestsContainer() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addQuestToQuestList()
     }
 
     override fun onDestroyView() {

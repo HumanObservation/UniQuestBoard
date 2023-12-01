@@ -46,7 +46,7 @@ class QuestDetailTest {
                 mutableListOf(),
                 "reward da",
                 Contact("4568765","@tester"),
-                UUID.randomUUID()
+                "testquestID"
             )
             fragment.RefreshUI()
         }
@@ -57,12 +57,12 @@ class QuestDetailTest {
         onView(withId(R.id.tvExpireTime)).check(matches(withText("Expire : " + df.format(testTime))))
         onView(withId(R.id.contactInformationContainer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         scenario.onFragment { fragment ->
-            fragment.viewModel.curQuest.publisher = "someoneElse"
+            fragment.viewModel.curQuest!!.publisher = "someoneElse"
             fragment.RefreshUI()
         }
         onView(withId(R.id.contactInformationContainer)).check(matches(withEffectiveVisibility(Visibility.GONE)))
         scenario.onFragment { fragment ->
-            fragment.viewModel.curQuest.taker.add("tester")
+            fragment.viewModel.curQuest!!.taker.add("tester")
             fragment.RefreshUI()
         }
         onView(withId(R.id.contactInformationContainer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
@@ -84,7 +84,7 @@ class QuestDetailTest {
                 mutableListOf(),
                 "reward da",
                 Contact("4568765","@tester"),
-                UUID.randomUUID()
+                "testquestID"
             )
             fragment.RefreshUI()
         }
@@ -94,7 +94,7 @@ class QuestDetailTest {
         onView(withId(R.id.takeButton)).check(matches(withEffectiveVisibility(Visibility.GONE)))
 
         scenario.onFragment { fragment ->
-            fragment.viewModel.curQuest.publisher = "someoneElse"
+            fragment.viewModel.curQuest!!.publisher = "someoneElse"
             fragment.RefreshUI()
         }
         //As potential taker
@@ -104,11 +104,19 @@ class QuestDetailTest {
 
         //As taker
         scenario.onFragment { fragment ->
-            fragment.viewModel.curQuest.taker.add("tester")
+            fragment.viewModel.curQuest!!.taker.add("tester")
             fragment.RefreshUI()
         }
         onView(withId(R.id.cancelButton)).check(matches(withEffectiveVisibility(Visibility.GONE)))
         onView(withId(R.id.completeButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.takeButton)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+
+        scenario.onFragment { fragment ->
+            fragment.viewModel.curQuest!!.status = Status.EXPIRED
+            fragment.RefreshUI()
+        }
+        onView(withId(R.id.cancelButton)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.completeButton)).check(matches(withEffectiveVisibility(Visibility.GONE)))
         onView(withId(R.id.takeButton)).check(matches(withEffectiveVisibility(Visibility.GONE)))
     }
 }

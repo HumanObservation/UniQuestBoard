@@ -66,7 +66,7 @@ class QuestDetailFragment : QuestsContainer() {
             }
 
             override fun onError(error: String) {
-                TODO("Not yet implemented")
+                //TODO:("Not yet implemented")
             }
         })
     }
@@ -136,6 +136,7 @@ class QuestDetailFragment : QuestsContainer() {
         //可视与否设定
         val takeButton = binding.includeQuestDetail.takeButton
         val cancelButton = binding.includeQuestDetail.cancelButton
+        val completeButton = binding.includeQuestDetail.completeButton
         if(viewModel.curQuest!!.status == Status.COMPLETED ||
             viewModel.curQuest!!.status == Status.INTERRUPTED||
             viewModel.curQuest!!.status == Status.FAILED ||
@@ -210,7 +211,7 @@ class QuestDetailFragment : QuestsContainer() {
         }
 
         completeButton.setOnClickListener(){
-            viewModel.curQuest.status = Status.COMPLETED
+            viewModel.curQuest!!.status = Status.COMPLETED
             //TODO:将更改同步到db
             RefreshUI()
         }

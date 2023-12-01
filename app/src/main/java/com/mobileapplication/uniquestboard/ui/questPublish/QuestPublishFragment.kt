@@ -21,7 +21,6 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.mobileapplication.uniquestboard.GlobalVariables
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestPublishBinding
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.common.Contact
@@ -74,11 +73,11 @@ class QuestPublishFragment : QuestsContainer() {
         val instagramInputField = binding.includeQuestPublishForm.instagramInputField
         whatsappCheckBox.setOnClickListener(){check->
             whatsappInputField.isEnabled = whatsappCheckBox.isChecked
-            instagramCheckBox.isEnabled = !whatsappCheckBox.isChecked;
+            instagramInputField.isEnabled = instagramCheckBox.isChecked;
         }
         instagramCheckBox.setOnClickListener(){check->
             instagramInputField.isEnabled = instagramCheckBox.isChecked
-            whatsappCheckBox.isEnabled = !instagramCheckBox.isChecked;
+            whatsappInputField.isEnabled = whatsappCheckBox.isChecked;
         }
     }
 
@@ -247,8 +246,7 @@ class QuestPublishFragment : QuestsContainer() {
     private fun setUpPublishButton(){
         binding.includeQuestPublishForm.publishButton.setOnClickListener(){
             if(!generateQuest()) return@setOnClickListener
-            quest = generateQuest()
-            var json = quest.serializeQuest()
+            var json = newQuest.serializeQuest()
 
             Log.d(TAG,json)
             var rq = Volley.newRequestQueue(requireActivity().applicationContext);
@@ -261,20 +259,20 @@ class QuestPublishFragment : QuestsContainer() {
                 override fun getParams(): MutableMap<String, String>? {
                     var params = HashMap<String, String>();
                     params.put("itsc", GlobalVariables.user.itsc);
-                    params.put("title", quest.title);
-                    params.put("description", quest.content);
+                    params.put("title", newQuest.title);
+                    params.put("description", newQuest.content);
                     params.put("publisher", GlobalVariables.user.itsc);
-                    params.put("publish_date", quest.publishTime.toString());
-                    params.put("expired_date", quest.expiredTime.toString());
-                    if(quest.contact.whatsapp == null)
+                    params.put("publish_date", newQuest.publishTime.toString());
+                    params.put("expired_date", newQuest.expiredTime.toString());
+                    if(newQuest.contact.whatsapp == null)
                     {
-                        params.put("contact", quest.contact.instagram!!);
+                        params.put("contact", newQuest.contact.instagram!!);
                     }
                     else
                     {
-                        params.put("contact", quest.contact.whatsapp!!);
+                        params.put("contact", newQuest.contact.whatsapp!!);
                     }
-                    params.put("reward", quest.reward);
+                    params.put("reward", newQuest.reward);
                     return params;
                 }
             }
@@ -312,7 +310,7 @@ class QuestPublishFragment : QuestsContainer() {
             viewModel.reward,
             contact,
             "h")
-        return newQuest;
+        return true;
     }
 
     public fun generateContact():Boolean{
