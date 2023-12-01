@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
 import com.google.gson.Gson
+import com.mobileapplication.uniquestboard.GlobalVariables
 
 enum class Status {
     PENDING,      // 待接取
@@ -32,10 +33,11 @@ data class Quest(
     var contact: Contact,
     val questID: String,
 ) : java.io.Serializable{
+    @RequiresApi(Build.VERSION_CODES.O)
     fun serializeQuest():String{
         var serializedQuest = SerializedQuest(
-            publishTime.toString(),
-            expiredTime.toString(),
+            GlobalVariables.df.format(publishTime),
+            GlobalVariables.df.format(expiredTime),
             publisher,
             taker,
             title,

@@ -262,8 +262,8 @@ class QuestPublishFragment : QuestsContainer() {
                     params.put("title", newQuest.title);
                     params.put("description", newQuest.content);
                     params.put("publisher", GlobalVariables.user.itsc);
-                    params.put("publish_date", newQuest.publishTime.toString());
-                    params.put("expired_date", newQuest.expiredTime.toString());
+                    params.put("publish_date", GlobalVariables.df.format(newQuest.publishTime));
+                    params.put("expired_date", GlobalVariables.df.format(newQuest.expiredTime));
                     if(newQuest.contact.whatsapp == null)
                     {
                         params.put("contact", newQuest.contact.instagram!!);
@@ -308,7 +308,7 @@ class QuestPublishFragment : QuestsContainer() {
             Status.PENDING,
             mutableListOf(),
             viewModel.reward,
-            contact,
+            newQuestContact,
             "h")
         return true;
     }

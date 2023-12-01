@@ -8,7 +8,7 @@ import com.mobileapplication.uniquestboard.ui.common.Quest
 open class QuestContainerViewModel : ViewModel() {
     //var questList = mutableListOf<Quest>()
     private val _questList = MutableLiveData<MutableList<Quest>>()
-    val numOfQuestPerLoad = 1;
+    val numOfQuestPerLoad = 10;
     var currrentPage = 0;
     var curPosition:Int = 0;
 
