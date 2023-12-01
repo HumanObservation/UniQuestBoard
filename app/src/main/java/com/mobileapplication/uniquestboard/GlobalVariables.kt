@@ -2,6 +2,6 @@ package com.mobileapplication.uniquestboard
 
 object GlobalVariables{
     lateinit var user : User;
-    var ip : String = "10.89.21.173"
+    var ip : String = "192.168.1.116"
     var port:Int = 80
 }

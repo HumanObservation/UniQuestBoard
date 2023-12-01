@@ -17,6 +17,7 @@ import com.mobileapplication.uniquestboard.MainActivity
 import com.mobileapplication.uniquestboard.databinding.LoginBinding
 import com.mobileapplication.uniquestboard.R
 import com.mobileapplication.uniquestboard.User
+import com.mobileapplication.uniquestboard.ui.register.RegisterActivity
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
@@ -55,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             rq.add(sr);
         }
         rbtn.setOnClickListener{
-            //Intent(this, RegisterActivity::class.java).also { startActivity(it) }
+            Intent(this, RegisterActivity::class.java).also { startActivity(it) }
         }
     }
 }
