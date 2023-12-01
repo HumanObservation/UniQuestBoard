@@ -13,27 +13,33 @@ if(mysqli_connect_errno())
 ?>
 
 <?php
-$id = "";
+$itsc = "";
 $array = array();
 $count = 1;
-if (isset($_POST["user_id"]) && !empty(trim($_POST["user_id"])))
+if (isset($_POST["itsc"]) && !empty(trim($_POST["itsc"])))
 {
-    $id = mysqli_real_escape_string($connection, trim($_POST["user_id"]));
+    $itsc = mysqli_real_escape_string($connection, trim($_POST["itsc"]));
 }
-$fquery =  "SELECT `order_id` FROM quest WHERE `user_id` = '".$id."';";
-$fresult = mysqli_query($connection, $fquery);
-while($frow = mysqli_fetch_array($fresult))
-{
-	$query = "SELECT * FROM orders WHERE `order_id` = '".$frow."';"
-	$result = mysqli_query($connection, $query);
-	while($row = mysqli_fetch_array($result))
-	{
-		$array[$count] = array(array("order_id" => $row[0], "user_id" => $row[1], "title" => $row[2], "description" => $row[3], "publisher" => $row[4], "address" => $row[5], "image_url" => $row[6], "publish_date" =>$row[7], "remain_time" =>$row[8], "contact" =>$row[9], "reward" => $row[10], "status" => $row[11]));
-		$count++;
-	}
-}
+$query = "SELECT u.`user_id`, q.`order_id`, o.*
+FROM user u
+JOIN quest q ON u.`user_id` = q.`user_id`
+JOIN orders o ON q.`order_id` = o.`order_id`
+WHERE u.`itsc` = '".$itsc."';";
+$result = mysqli_query($connection, $query);
 
-echo json_encode($array);
+while($row = mysqli_fetch_array($result))
+{
+	$array[$count] = array(array("order_id" => $row[2], "user_id" => $row[3], "title" => $row[4], "description" => $row[5], "publisher" => $row[6], "publish_date" =>$row[7], "expired_date" =>$row[8], "contact" =>$row[9], "reward" => $row[10], "status" => $row[11]));
+	$count++;
+}
+if($count != 1)
+{
+	echo json_encode($array);
+}
+else
+{
+	echo "The record is not found.";
+}
 mysqli_free_result($result);
 mysqli_close($connection);
 exit();

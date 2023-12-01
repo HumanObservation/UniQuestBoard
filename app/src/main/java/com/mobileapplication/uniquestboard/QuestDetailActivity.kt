@@ -1,5 +1,6 @@
 package com.mobileapplication.uniquestboard
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -13,8 +14,12 @@ class QuestDetailActivity : AppCompatActivity() {
         binding = ActivityQuestDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (savedInstanceState == null) {
+            val intent: Intent = intent
+            val id = intent.getStringExtra("questID")
+            val bundle = Bundle()
+            bundle.putString("questID", id)
             val fragment = QuestDetailFragment()
-
+            fragment.arguments = bundle;
             // Use FragmentTransaction to add the fragment to the container
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)

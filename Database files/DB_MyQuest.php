@@ -12,21 +12,28 @@ if(mysqli_connect_errno())
 ?>
 
 <?php
-$id = "";
-if (isset($_POST["user_id"]) && !empty(trim($_POST["user_id"])))
+$itsc = "";
+if (isset($_POST["publisher"]) && !empty(trim($_POST["publisher"])))
 {
-    $id = mysqli_real_escape_string($connection, trim($_POST["user_id"]);
+    $itsc = mysqli_real_escape_string($connection, trim($_POST["publisher"]));
 }
-$query =  "SELECT * FROM orders WHERE `user_id` = '".$id."';";
+$query =  "SELECT * FROM orders WHERE `publisher` = '".$itsc."';";
 $result = mysqli_query($connection, $query);
 $array = array();
 $count = 1;
 while($row = mysqli_fetch_array($result))
 {
-	$array[$count] = array(array("order_id" => $row[0], "user_id" => $row[1], "title" => $row[2], "description" => $row[3], "publisher" => $row[4], "address" => $row[5], "image_url" => $row[6], "publish_date" =>$row[7], "remain_time" =>$row[8], "contact" =>$row[9], "reward" => $row[10], "status" => $row[11]));
+	$array[$count] = array(array("order_id" => $row[0], "user_id" => $row[1], "title" => $row[2], "description" => $row[3], "publisher" => $row[4], "publish_date" =>$row[5], "expired_date" =>$row[6], "contact" =>$row[7], "reward" => $row[8], "status" => $row[9]));
 	$count++;
 }
-echo json_encode($array);
+if($count != 1)
+{
+	echo json_encode($array);
+}
+else
+{
+	echo "The record is not found.";
+}
 mysqli_free_result($result);
 mysqli_close($connection);
 exit();

@@ -50,5 +50,8 @@ class LoginActivity : AppCompatActivity() {
             }
             rq.add(sr);
         }
+        rbtn.setOnClickListener{
+            //Intent(this, RegisterActivity::class.java).also { startActivity(it) }
+        }
     }
 }
