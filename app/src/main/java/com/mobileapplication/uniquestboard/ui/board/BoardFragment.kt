@@ -83,7 +83,7 @@ class BoardFragment : QuestsContainer() {
                         LocalDateTime.now(),
                         LocalDateTime.now(),
                         js.getString("publisher"),
-                        taker,
+                        null,
                         js.getString("title"),
                         js.getString("description"),
                         enumValues<Status>().firstOrNull { it.ordinal == js.getString("status").toInt() }!!,
@@ -141,45 +141,45 @@ class BoardFragment : QuestsContainer() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun addTestQuest(){
-        val questList = mutableListOf<Quest>()
-        val taker = mutableListOf<String>()
-        taker.add("someone")
-        var contact = Contact("55556666","@some_one")
-        var status = Status.COMPLETED;
-        val image = mutableListOf<String>()
-        var quest1: Quest = Quest(
-            LocalDateTime.now(),
-            LocalDateTime.now(),
-            "admin",
-            taker,
-            "the title",
-            "the content",
-            status,
-            image,
-            "thankfulness",
-            contact,
-            "g"
-        )
-
-        viewModel.appendQuest(quest1)
-        taker.add("anyone else")
-        var quest2: Quest = Quest(
-            LocalDateTime.now(),
-            LocalDateTime.now(),
-            "someone else",
-            taker,
-            "the title aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "the content bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-            Status.PENDING,
-            image,
-            "thankfulness",
-            contact,
-            "g"
-        )
-        viewModel.appendQuest(quest2)
-    }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun addTestQuest(){
+//        val questList = mutableListOf<Quest>()
+//        val taker = mutableListOf<String>()
+//        taker.add("someone")
+//        var contact = Contact("55556666","@some_one")
+//        var status = Status.COMPLETED;
+//        val image = mutableListOf<String>()
+//        var quest1: Quest = Quest(
+//            LocalDateTime.now(),
+//            LocalDateTime.now(),
+//            "admin",
+//            taker,
+//            "the title",
+//            "the content",
+//            status,
+//            image,
+//            "thankfulness",
+//            contact,
+//            "g"
+//        )
+//
+//        viewModel.appendQuest(quest1)
+//        taker.add("anyone else")
+//        var quest2: Quest = Quest(
+//            LocalDateTime.now(),
+//            LocalDateTime.now(),
+//            "someone else",
+//            taker,
+//            "the title aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+//            "the content bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+//            Status.PENDING,
+//            image,
+//            "thankfulness",
+//            contact,
+//            "g"
+//        )
+//        viewModel.appendQuest(quest2)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

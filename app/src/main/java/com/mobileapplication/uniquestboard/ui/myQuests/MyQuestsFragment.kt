@@ -64,9 +64,6 @@ class MyQuestsFragment : QuestsContainer() {
                         val sub = result.substring(1, result.length - 1);
                         val js: JSONObject = JSONObject(sub)
                         Log.i(i.toString(), js.getString("title"));
-                        val questList = mutableListOf<Quest>()
-                        val taker = mutableListOf<String>()
-                        taker.add("someone")
                         var ct = js.getString("contact");
                         var ctsub = ct.substring(0, 2);
                         var contact : Contact;
@@ -84,7 +81,7 @@ class MyQuestsFragment : QuestsContainer() {
                             LocalDateTime.now(),
                             LocalDateTime.now(),
                             js.getString("publisher"),
-                            taker,
+                            null,
                             js.getString("title"),
                             js.getString("description"),
                             enumValues<Status>().firstOrNull { it.ordinal == js.getString("status").toInt() }!!,
@@ -152,29 +149,29 @@ class MyQuestsFragment : QuestsContainer() {
         viewModel.liveQuestList.value?.clear()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun addQuestToQuestList(){
-        val taker = mutableListOf<String>()
-        taker.add("someone")
-        var contact = Contact("55556666","@some_one")
-        var status = Status.COMPLETED;
-        val image = mutableListOf<String>()
-        var quest1: Quest = Quest(
-            LocalDateTime.now(),
-            LocalDateTime.now(),
-            "admin",
-            taker,
-            "the title",
-            "the content",
-            Status.FAILED,
-            image,
-            "thankfulness",
-            contact,
-            "h"
-        )
-        viewModel.appendQuest(quest1)
-
-    }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun addQuestToQuestList(){
+//        val taker = mutableListOf<String>()
+//        taker.add("someone")
+//        var contact = Contact("55556666","@some_one")
+//        var status = Status.COMPLETED;
+//        val image = mutableListOf<String>()
+//        var quest1: Quest = Quest(
+//            LocalDateTime.now(),
+//            LocalDateTime.now(),
+//            "admin",
+//            taker,
+//            "the title",
+//            "the content",
+//            Status.FAILED,
+//            image,
+//            "thankfulness",
+//            contact,
+//            "h"
+//        )
+//        viewModel.appendQuest(quest1)
+//
+//    }
 
     private fun updateAdapter(isLoad:Boolean) : Boolean{
         val recyclerView: RecyclerView = binding.questListInclude.recyclerView;

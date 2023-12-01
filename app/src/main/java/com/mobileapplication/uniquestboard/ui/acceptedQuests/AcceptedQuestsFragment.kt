@@ -68,9 +68,6 @@ class AcceptedQuestsFragment : QuestsContainer() {
                         val sub = result.substring(1, result.length - 1);
                         val js: JSONObject = JSONObject(sub)
                         Log.i(i.toString(), js.getString("title"));
-                        val questList = mutableListOf<Quest>()
-                        val taker = mutableListOf<String>()
-                        taker.add("someone")
                         var ct = js.getString("contact");
                         var ctsub = ct.substring(0, 2);
                         var contact : Contact;
@@ -82,13 +79,12 @@ class AcceptedQuestsFragment : QuestsContainer() {
                         {
                             contact = Contact(js.getString("contact"), null)
                         }
-                        var status = Status.COMPLETED;
                         val image = mutableListOf<String>()
                         var quest1: Quest = Quest(
                             LocalDateTime.now(),
                             LocalDateTime.now(),
                             js.getString("publisher"),
-                            taker,
+                            GlobalVariables.user.itsc,
                             js.getString("title"),
                             js.getString("description"),
                             enumValues<Status>().firstOrNull { it.ordinal == js.getString("status").toInt() }!!,
@@ -97,7 +93,10 @@ class AcceptedQuestsFragment : QuestsContainer() {
                             contact,
                             js.getString("order_id")
                         )
-                        callback.onSuccess(quest1)
+                        if(js.getString("status") == "1")
+                        {
+                            callback.onSuccess(quest1)
+                        }
                     }
 
                     Toast.makeText(requireActivity().getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();} },

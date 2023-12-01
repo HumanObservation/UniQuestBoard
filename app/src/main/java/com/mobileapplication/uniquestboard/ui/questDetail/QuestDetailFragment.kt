@@ -103,7 +103,7 @@ class QuestDetailFragment : QuestsContainer() {
 
     private fun setUpContactInformation(){
         //设定整个ContactInformation是否应该显示
-        if(viewModel.curQuest!!.taker.contains(GlobalVariables.user.itsc)||
+        if(viewModel.curQuest!!.taker != null||
             viewModel.curQuest!!.publisher == GlobalVariables.user.itsc){
             binding.includeQuestDetail.contactInformationContainer.visibility = View.VISIBLE
         }
@@ -132,7 +132,6 @@ class QuestDetailFragment : QuestsContainer() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpStatusChangingButton(){
-        Log.i("gg", viewModel.curQuest!!.status.toString());
         //可视与否设定
         val takeButton = binding.includeQuestDetail.takeButton
         val cancelButton = binding.includeQuestDetail.cancelButton
@@ -151,12 +150,13 @@ class QuestDetailFragment : QuestsContainer() {
             cancelButton.visibility = View.VISIBLE
             completeButton.visibility = View.GONE
         }
-        else if(viewModel.curQuest!!.taker.contains(GlobalVariables.user.itsc)){
+        else if(viewModel.curQuest!!.taker != null && viewModel.curQuest!!.taker == GlobalVariables.user.itsc){
             cancelButton.visibility = View.GONE
             takeButton.visibility = View.GONE
             completeButton.visibility = View.VISIBLE
         }
         else{
+            Log.i("g", viewModel.curQuest!!.taker.toString());
             takeButton.visibility = View.VISIBLE
             cancelButton.visibility = View.GONE
             completeButton.visibility = View.GONE
@@ -164,7 +164,7 @@ class QuestDetailFragment : QuestsContainer() {
         //按钮逻辑设定
         takeButton.setOnClickListener(){
             viewModel.curQuest!!.status = Status.IN_PROGRESS
-            viewModel.curQuest!!.taker.add(GlobalVariables.user.itsc)
+            viewModel.curQuest!!.taker = GlobalVariables.user.itsc
             //TODO:将更改同步到db
             val id: String? = arguments?.getString("questID")
             var url : String = "http://${GlobalVariables.ip}:${GlobalVariables.port}/android/DB_AcceptQuest.php";
@@ -213,6 +213,23 @@ class QuestDetailFragment : QuestsContainer() {
         completeButton.setOnClickListener(){
             viewModel.curQuest!!.status = Status.COMPLETED
             //TODO:将更改同步到db
+            val id: String? = arguments?.getString("questID")
+            var url : String = "http://${GlobalVariables.ip}:${GlobalVariables.port}/android/DB_CompleteQuest.php";
+            var rq = Volley.newRequestQueue(requireActivity().applicationContext);
+            var sr = object : StringRequest(
+                Request.Method.POST, url,
+                Response.Listener { response ->
+                    Toast.makeText(requireActivity().applicationContext, "Login successes", Toast.LENGTH_SHORT).show(); },
+                Response.ErrorListener { e -> Toast.makeText(requireActivity().applicationContext,
+                    e.toString(), Toast.LENGTH_SHORT).show() })
+            {
+                override fun getParams(): MutableMap<String, String>? {
+                    var params = HashMap<String, String>();
+                    params.put("order_id", id!!);
+                    return params;
+                }
+            }
+            rq.add(sr);
             RefreshUI()
         }
     }

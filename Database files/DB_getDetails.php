@@ -24,7 +24,20 @@ $query =  "SELECT * FROM orders WHERE `order_id` = '".$id."';";
 $result = mysqli_query($connection, $query);
 while($row = mysqli_fetch_array($result))
 {
-	$array[$count] = array(array("order_id" => $row[0], "user_id" => $row[1], "title" => $row[2], "description" => $row[3], "publisher" => $row[4], "publish_date" =>$row[5], "expired_date" =>$row[6], "contact" =>$row[7], "reward" => $row[8], "status" => $row[9]));
+	$idquery = "SELECT itsc FROM user WHERE user_id = (SELECT user_id FROM quest WHERE order_id  = '".$id."');";
+	$idresult = mysqli_query($connection, $idquery);
+	if (mysqli_num_rows($idresult) > 0) 
+	{
+		while($idrow = mysqli_fetch_array($idresult))
+		{
+			$array[$count] = array(array("order_id" => $row[0], "user_id" => $row[1], "title" => $row[2], "description" => $row[3], "publisher" => $row[4], "publish_date" =>$row[5], "expired_date" =>$row[6], "contact" =>$row[7], "reward" => $row[8], "status" => $row[9], "taker" => $idrow[0]));
+		}
+	}
+	else
+	{
+		$array[$count] = array(array("order_id" => $row[0], "user_id" => $row[1], "title" => $row[2], "description" => $row[3], "publisher" => $row[4], "publish_date" =>$row[5], "expired_date" =>$row[6], "contact" =>$row[7], "reward" => $row[8], "status" => $row[9]));			
+	}
+	
 	$count++;
 }
 echo json_encode($array);
