@@ -116,7 +116,6 @@ open class QuestsContainer:Fragment() {
                     {
                         contact = Contact(js.getString("contact"), null)
                     }
-                    var status = Status.COMPLETED;
                     var quest = Quest(
                         LocalDateTime.now(),
                         LocalDateTime.now(),

@@ -92,7 +92,7 @@ class BoardFragment : QuestsContainer() {
                         contact,
                         js.getString("order_id")
                     )
-                    if(js.getString("publisher") != GlobalVariables.user.itsc && (js.getString("status") == "0" || js.getString("status") == "1"))
+                    if(js.getString("publisher") != GlobalVariables.user.itsc && (js.getString("status") == "0"))
                     {
                         callback.onSuccess(quest1)
                     }

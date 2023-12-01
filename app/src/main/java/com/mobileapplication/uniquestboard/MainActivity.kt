@@ -3,6 +3,7 @@ package com.mobileapplication.uniquestboard
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -45,11 +46,16 @@ class MainActivity : AppCompatActivity() {
             ),drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        val header_itsc = findViewById<TextView>(R.id.nav_header_itsc)
+        val header_itsc_email = findViewById<TextView>(R.id.nav_header_itsc_email)
+        header_itsc.text = GlobalVariables.user.itsc
+        header_itsc.text = GlobalVariables.user.itsc + "@connect.ust.hk"
         return true
     }
 
@@ -57,4 +63,5 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 }
