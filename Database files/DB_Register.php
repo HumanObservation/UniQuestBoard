@@ -13,13 +13,10 @@ if(mysqli_connect_errno())
 ?>
 
 <?php
-$user_id = "";
 $student_id = "";
 $itsc = "";
 $email = "";
 $password = "";
-$array = array();
-$count = 1;
 if (isset($_POST["student_id"]) && !empty(trim($_POST["student_id"])))
 {
     $student_id = mysqli_real_escape_string($connection, trim($_POST["student_id"]));
@@ -37,16 +34,17 @@ if (isset($_POST["password"]) && !empty(trim($_POST["password"])))
     $password = mysqli_real_escape_string($connection, trim($_POST["password"]));
 }
 
-$insert = "INSERT INTO user (`student_id`, `itsc`, `email`, `password`) VALUES ('".$student_id."', '".$itsc."', '".$email."', '".$password."')";
-if (mysqli_query($connection, $insert)) 
-{
-    echo "Data inserted successfully!";
-} 
-else 
-{
-    echo "Error in the query: " . mysqli_error($connection);
-}
-mysqli_free_result($result);
+
+    $insert = "INSERT INTO user (`student_id`, `itsc`, `email`, `password`) VALUES ('".$student_id."', '".$itsc."', '".$email."', '".$password."');";
+    if (mysqli_query($connection, $insert)) 
+    {
+        echo "Data inserted successfully!";
+    } 
+    else 
+    {
+        echo "Error in the query: " . mysqli_error($connection);
+    }
+
 mysqli_close($connection);
 exit();
 ?>

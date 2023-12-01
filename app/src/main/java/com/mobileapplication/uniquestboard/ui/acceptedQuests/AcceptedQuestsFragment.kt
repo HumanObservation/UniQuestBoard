@@ -91,7 +91,7 @@ class AcceptedQuestsFragment : QuestsContainer() {
                             taker,
                             js.getString("title"),
                             js.getString("description"),
-                            status,
+                            enumValues<Status>().firstOrNull { it.ordinal == js.getString("status").toInt() }!!,
                             image,
                             js.getString("reward"),
                             contact,
