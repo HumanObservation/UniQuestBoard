@@ -2,6 +2,7 @@ package com.mobileapplication.uniquestboard.ui.questPublish
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -21,6 +22,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.mobileapplication.uniquestboard.MainActivity
 import com.mobileapplication.uniquestboard.databinding.FragmentQuestPublishBinding
 import com.mobileapplication.uniquestboard.ui.base.QuestsContainer
 import com.mobileapplication.uniquestboard.ui.common.Contact
@@ -275,6 +277,9 @@ class QuestPublishFragment : QuestsContainer() {
                 }
             }
             rq.add(sr);
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("activateFragment", "BoardFragment") // 将要激活的Fragment的标识传递给MainActivity
+            startActivity(intent)
         }
     }
 

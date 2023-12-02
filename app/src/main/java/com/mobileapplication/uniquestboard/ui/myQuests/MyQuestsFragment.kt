@@ -78,8 +78,8 @@ class MyQuestsFragment : QuestsContainer() {
                         var status = Status.COMPLETED;
                         val image = mutableListOf<String>()
                         var quest1: Quest = Quest(
-                            LocalDateTime.now(),
-                            LocalDateTime.now(),
+                            LocalDateTime.parse(js.getString("publish_date"),df),
+                            LocalDateTime.parse(js.getString("expired_date"),df),
                             js.getString("publisher"),
                             null,
                             js.getString("title"),
@@ -212,7 +212,7 @@ class MyQuestsFragment : QuestsContainer() {
                 override fun onSuccess(response: Quest) {
                     viewModel.appendQuest(response);
                     //成功->
-                    refreshlayout.finishRefresh(2000 /*,false*/) //传入false表示刷新失败
+                    refreshlayout.finishRefresh(500) //传入false表示刷新失败
                 }
 
                 override fun onError(error: String) {

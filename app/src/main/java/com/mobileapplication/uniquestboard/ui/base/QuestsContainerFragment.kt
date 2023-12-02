@@ -124,8 +124,8 @@ open class QuestsContainer:Fragment() {
                         taker = null;
                     }
                     var quest = Quest(
-                        LocalDateTime.now(),
-                        LocalDateTime.now(),
+                        LocalDateTime.parse(js.getString("publish_date"),df),
+                        LocalDateTime.parse(js.getString("expired_date"),df),
                         js.getString("publisher"),
                         taker,
                         js.getString("title"),

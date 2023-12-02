@@ -19,9 +19,10 @@ public interface OnItemClickListener{
     fun onItemCllick(position:Int)
 }
 
-class QuestListAdapter(private val questList: List<Quest>?) :
+class QuestListAdapter(private val originalQuestList: List<Quest>?) :
     RecyclerView.Adapter<QuestListAdapter.ViewHolder>() {
 
+    val questList = originalQuestList?.reversed()
     @RequiresApi(Build.VERSION_CODES.O)
     var df = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
     var TAG:String = "QuestAdapter"

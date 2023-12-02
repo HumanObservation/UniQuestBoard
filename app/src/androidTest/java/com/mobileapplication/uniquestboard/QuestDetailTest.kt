@@ -39,7 +39,7 @@ class QuestDetailTest {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 "tester",
-                mutableListOf(),
+                "taker",
                 "title hahahahahahaha",
                 "content xixixixxixixixi",
                 Status.PENDING,
@@ -62,7 +62,7 @@ class QuestDetailTest {
         }
         onView(withId(R.id.contactInformationContainer)).check(matches(withEffectiveVisibility(Visibility.GONE)))
         scenario.onFragment { fragment ->
-            fragment.viewModel.curQuest!!.taker.add("tester")
+            fragment.viewModel.curQuest!!.taker="tester"
             fragment.RefreshUI()
         }
         onView(withId(R.id.contactInformationContainer)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
@@ -77,7 +77,7 @@ class QuestDetailTest {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 "tester",
-                mutableListOf(),
+                "taker",
                 "title hahahahahahaha",
                 "content xixixixxixixixi",
                 Status.PENDING,
@@ -104,7 +104,7 @@ class QuestDetailTest {
 
         //As taker
         scenario.onFragment { fragment ->
-            fragment.viewModel.curQuest!!.taker.add("tester")
+            fragment.viewModel.curQuest!!.taker="tester"
             fragment.RefreshUI()
         }
         onView(withId(R.id.cancelButton)).check(matches(withEffectiveVisibility(Visibility.GONE)))

@@ -81,8 +81,8 @@ class AcceptedQuestsFragment : QuestsContainer() {
                         }
                         val image = mutableListOf<String>()
                         var quest1: Quest = Quest(
-                            LocalDateTime.now(),
-                            LocalDateTime.now(),
+                            LocalDateTime.parse(js.getString("publish_date"),df),
+                            LocalDateTime.parse(js.getString("expired_date"),df),
                             js.getString("publisher"),
                             GlobalVariables.user.itsc,
                             js.getString("title"),
@@ -93,13 +93,10 @@ class AcceptedQuestsFragment : QuestsContainer() {
                             contact,
                             js.getString("order_id")
                         )
-                        if(js.getString("status") == "1")
-                        {
                             callback.onSuccess(quest1)
-                        }
                     }
 
-                    Toast.makeText(requireActivity().getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();} },
+                    Toast.makeText(requireActivity().applicationContext, response.toString(), Toast.LENGTH_SHORT).show();} },
             Response.ErrorListener { e -> callback.onError(e.toString()); callback.onError(e.toString());Toast.makeText(requireActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show() })
         {
             override fun getParams(): MutableMap<String, String>? {
@@ -191,7 +188,7 @@ class AcceptedQuestsFragment : QuestsContainer() {
                 override fun onSuccess(response: Quest) {
                     viewModel.appendQuest(response);
                     //成功->
-                    refreshlayout.finishRefresh(2000 /*,false*/) //传入false表示刷新失败
+                    refreshlayout.finishRefresh(500/*,false*/) //传入false表示刷新失败
                 }
 
                 override fun onError(error: String) {

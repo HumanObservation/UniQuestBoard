@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val header_itsc = findViewById<TextView>(R.id.nav_header_itsc)
         val header_itsc_email = findViewById<TextView>(R.id.nav_header_itsc_email)
         header_itsc.text = GlobalVariables.user.itsc
-        header_itsc.text = GlobalVariables.user.itsc + "@connect.ust.hk"
+        header_itsc_email.text = GlobalVariables.user.itsc + "@connect.ust.hk"
         return true
     }
 
