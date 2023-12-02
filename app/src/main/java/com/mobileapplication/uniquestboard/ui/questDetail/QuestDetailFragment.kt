@@ -103,7 +103,8 @@ class QuestDetailFragment : QuestsContainer() {
 
     private fun setUpContactInformation(){
         //设定整个ContactInformation是否应该显示
-        if(viewModel.curQuest!!.taker != null||
+        if(viewModel.curQuest!!.taker != null &&
+            viewModel.curQuest!!.taker == GlobalVariables.user.itsc ||
             viewModel.curQuest!!.publisher == GlobalVariables.user.itsc){
             binding.includeQuestDetail.contactInformationContainer.visibility = View.VISIBLE
         }
