@@ -166,9 +166,10 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
-                    android:backgroundTint="@color/completed_blue"
+                    android:backgroundTint="@color/failed_red"
                     android:text = "Cancel it :("
                     android:textColor="@color/cardview_dark_background">
+
                 </Button>
                 <Button
                     android:id="@+id/completeButton"
