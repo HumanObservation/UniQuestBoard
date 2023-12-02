@@ -44,31 +44,31 @@ open class QuestsContainer:Fragment() {
     var status = Status.PENDING;
     val image = mutableListOf<String>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    val testQuest = Quest(
-        LocalDateTime.now(),
-        LocalDateTime.now(),
-        "else",
-        taker,
-        "the test title somehow the price is higher than expected 6666666666666666666666666666666666666666666666666666666666666666666" +
-                "11111111111111111111111111111111111111111111111111111111111111111111111111111"
-                ,
-        "the test content tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt" +
-                "555555555555555555555555555555555555555555555555555555555555555555555555555555555" +
-                "888888888888888888888888888888888888888888888888888888888888888888888888888888888" +
-                "111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
-                "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-        status,
-        image,
-        "thankfulness",
-        contact,
-        "g"
-    )
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    val testQuest = Quest(
+//        LocalDateTime.now(),
+//        LocalDateTime.now(),
+//        "else",
+//        taker,
+//        "the test title somehow the price is higher than expected 6666666666666666666666666666666666666666666666666666666666666666666" +
+//                "11111111111111111111111111111111111111111111111111111111111111111111111111111"
+//                ,
+//        "the test content tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt" +
+//                "555555555555555555555555555555555555555555555555555555555555555555555555555555555" +
+//                "888888888888888888888888888888888888888888888888888888888888888888888888888888888" +
+//                "111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+//                "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+//        status,
+//        image,
+//        "thankfulness",
+//        contact,
+//        "g"
+//    )
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getQuests(action: ContainerAction, publisherID:String?, receiverID:String?, curStatus: Status?):MutableList<Quest>{
-        //根据条件查找一定数量（numOfQuestsPerGet）的quest，并返回list
-        return when(action){
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun getQuests(action: ContainerAction, publisherID:String?, receiverID:String?, curStatus: Status?):MutableList<Quest>{
+//        //根据条件查找一定数量（numOfQuestsPerGet）的quest，并返回list
+//        return when(action){
 //            ContainerAction.GetByPublisher->{
 //
 //            }
@@ -78,13 +78,13 @@ open class QuestsContainer:Fragment() {
 //            ContainerAction.GetByCurStatus->{
 //
 //            }
-            else->{
-                Log.e(TAG,"Unknow Action!")
-                var questList = mutableListOf<Quest>(testQuest)
-                return questList
-            }
-        }
-    }
+//            else->{
+//                Log.e(TAG,"Unknow Action!")
+//                var questList = mutableListOf<Quest>(testQuest)
+//                return questList
+//            }
+//        }
+//    }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -103,8 +103,6 @@ open class QuestsContainer:Fragment() {
                     val sub = result.substring(1, result.length - 1);
                     val js: JSONObject = JSONObject(sub)
                     Log.i(i.toString(), js.getString("title"));
-                    val taker = mutableListOf<String>()
-                    taker.add("someone")
                     var ct = js.getString("contact");
                     var ctsub = ct.substring(0, 2);
                     var contact : Contact;
@@ -115,6 +113,15 @@ open class QuestsContainer:Fragment() {
                     else
                     {
                         contact = Contact(js.getString("contact"), null)
+                    }
+                    var taker : String?;
+                    if(js.has("taker"))
+                    {
+                        taker = js.getString("taker");
+                    }
+                    else
+                    {
+                        taker = null;
                     }
                     var quest = Quest(
                         LocalDateTime.now(),

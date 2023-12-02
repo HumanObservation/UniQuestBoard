@@ -246,9 +246,7 @@ class QuestPublishFragment : QuestsContainer() {
     private fun setUpPublishButton(){
         binding.includeQuestPublishForm.publishButton.setOnClickListener(){
             if(!generateQuest()) return@setOnClickListener
-            var json = newQuest.serializeQuest()
 
-            Log.d(TAG,json)
             var rq = Volley.newRequestQueue(requireActivity().applicationContext);
             var url : String = "http://${GlobalVariables.ip}:${GlobalVariables.port}/android/DB_QuestPublish.php";
             var sr = object : StringRequest(
@@ -302,7 +300,7 @@ class QuestPublishFragment : QuestsContainer() {
             LocalDateTime.now(),
             viewModel.expireTime,
             GlobalVariables.user.itsc,
-            mutableListOf(),
+            null,
             viewModel.title,
             viewModel.content,
             Status.PENDING,
