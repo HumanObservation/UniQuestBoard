@@ -1,4 +1,5 @@
 package com.mobileapplication.uniquestboard
+import android.view.ViewGroup
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -16,6 +17,7 @@ import com.mobileapplication.uniquestboard.ui.questDetail.QuestDetailFragment
 import com.mobileapplication.uniquestboard.ui.questPublish.QuestPublishFragment
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertNotNull
 import junit.framework.TestCase.assertTrue
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -30,14 +32,12 @@ import java.util.function.Predicate.not
 
 @RunWith(AndroidJUnit4::class)
 class QuestAdapterTest {
-//    @Test
-//    fun testOnCreateViewHolder() {
-//        val adapter = QuestListAdapter(emptyList())
-//        val parent = mock(ViewGroup::class.java)
-//
-//        val viewHolder = adapter.onCreateViewHolder(parent, 0)
-//
-//        assertNotNull(viewHolder)
-//        // 进一步添加你的断言
-//    }
+    @Test
+    fun testOnCreateViewHolder() {
+        val adapter = QuestListAdapter(emptyList())
+        val parent = mock(ViewGroup::class.java)
+
+        val viewHolder = adapter.onCreateViewHolder(parent, 0)
+        assertNotNull(viewHolder)
+    }
 }
