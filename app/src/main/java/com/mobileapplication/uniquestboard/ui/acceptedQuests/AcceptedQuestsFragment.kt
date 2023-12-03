@@ -94,9 +94,7 @@ class AcceptedQuestsFragment : QuestsContainer() {
                             js.getString("order_id")
                         )
                             callback.onSuccess(quest1)
-                    }
-
-                    Toast.makeText(requireActivity().applicationContext, response.toString(), Toast.LENGTH_SHORT).show();} },
+                    }}},
             Response.ErrorListener { e -> callback.onError(e.toString()); callback.onError(e.toString());Toast.makeText(requireActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show() })
         {
             override fun getParams(): MutableMap<String, String>? {

@@ -96,9 +96,7 @@ class BoardFragment : QuestsContainer() {
                     {
                         callback.onSuccess(quest1)
                     }
-                }
-                Log.i(TAG, response.toString());
-                Toast.makeText(requireActivity().getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show(); },
+                }},
             Response.ErrorListener { e -> callback.onError(e.toString());Toast.makeText(requireActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show() }) {}
         rq.add(sr);
     }

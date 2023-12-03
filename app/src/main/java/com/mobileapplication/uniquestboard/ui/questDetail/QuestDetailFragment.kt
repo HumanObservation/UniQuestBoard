@@ -49,8 +49,7 @@ class QuestDetailFragment : QuestsContainer() {
     ): View? {
         _binding = FragmentQuestDetailBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        //setQuestDetail()
-        return root //inflater.inflate(R.layout.fragment_quest_detail, container, false)
+        return root 
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -95,10 +94,6 @@ class QuestDetailFragment : QuestsContainer() {
         component.tvPublisher.text = "Published by " + quest!!.publisher
         component.tvReward.text = "Reward : "+ quest.reward
         component.questDetailCard.setCardBackgroundColor(ContextCompat.getColor(requireContext(), getCardColor(quest!!.status)))
-//        HiddenInfo
-//
-//        coverImage
-
     }
 
     private fun setUpContactInformation(){
