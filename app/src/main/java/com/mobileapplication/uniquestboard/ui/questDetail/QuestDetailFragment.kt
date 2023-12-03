@@ -49,7 +49,7 @@ class QuestDetailFragment : QuestsContainer() {
     ): View? {
         _binding = FragmentQuestDetailBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        return root 
+        return root
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -168,7 +168,7 @@ class QuestDetailFragment : QuestsContainer() {
             var sr = object : StringRequest(
                 Request.Method.POST, url,
                 Response.Listener { response ->
-                    Toast.makeText(requireActivity().applicationContext, "Login successes", Toast.LENGTH_SHORT).show(); },
+                    Toast.makeText(requireActivity().applicationContext, "Accept successes!", Toast.LENGTH_SHORT).show(); },
                 Response.ErrorListener { e -> Toast.makeText(requireActivity().applicationContext,
                     e.toString(), Toast.LENGTH_SHORT).show() })
             {
@@ -192,7 +192,7 @@ class QuestDetailFragment : QuestsContainer() {
             var sr = object : StringRequest(
                 Request.Method.POST, url,
                 Response.Listener { response ->
-                    Toast.makeText(requireActivity().applicationContext, "Login successes", Toast.LENGTH_SHORT).show(); },
+                    Toast.makeText(requireActivity().applicationContext, "Cancel successes!", Toast.LENGTH_SHORT).show(); },
                 Response.ErrorListener { e -> Toast.makeText(requireActivity().applicationContext,
                     e.toString(), Toast.LENGTH_SHORT).show() })
             {
@@ -215,7 +215,7 @@ class QuestDetailFragment : QuestsContainer() {
             var sr = object : StringRequest(
                 Request.Method.POST, url,
                 Response.Listener { response ->
-                    Toast.makeText(requireActivity().applicationContext, "Login successes", Toast.LENGTH_SHORT).show(); },
+                    Toast.makeText(requireActivity().applicationContext, "Complete successes!", Toast.LENGTH_SHORT).show(); },
                 Response.ErrorListener { e -> Toast.makeText(requireActivity().applicationContext,
                     e.toString(), Toast.LENGTH_SHORT).show() })
             {

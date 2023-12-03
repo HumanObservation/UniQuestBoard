@@ -29,7 +29,6 @@ else
     echo "Error in the query: " . mysqli_error($connection);
 }
 
-mysqli_free_result($result);
 mysqli_close($connection);
 exit();
 ?>
