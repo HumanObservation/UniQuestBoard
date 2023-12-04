@@ -39,6 +39,10 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Login successes", Toast.LENGTH_SHORT).show();
                         GlobalVariables.user = User(itsc,pw)
                         Intent(this, MainActivity::class.java).also { startActivity(it); }
+                    }
+                    else
+                    {
+                        Toast.makeText(applicationContext, "Incorrect ITSC or Password", Toast.LENGTH_SHORT).show();
                     }},
                 Response.ErrorListener { e -> Toast.makeText(applicationContext,
                     "Login fail.$e", Toast.LENGTH_SHORT).show() })
